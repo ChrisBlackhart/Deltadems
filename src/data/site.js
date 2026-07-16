@@ -1,5 +1,10 @@
-// Central organization info + real external links.
-// These reflect the live organization so the demo is credible.
+// ============================================================================
+// CONTENT STATUS: CONFIRMED — sourced from the current live site
+// (deltademsmi.com). This is the single source of truth for organization info,
+// contact details, social links, the donation link, meeting facts, and the
+// legal disclaimer. Editing here updates the whole site.
+// Please re-verify with the client that these details are current before launch.
+// ============================================================================
 
 export const site = {
   name: "Delta County Democratic Party",

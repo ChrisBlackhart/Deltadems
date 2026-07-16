@@ -1,7 +1,11 @@
-// Placeholder people directory. Names here are fictional stand-ins for the
-// demo — replace with real local candidates and elected officials.
+// ============================================================================
+// CONTENT STATUS: PLACEHOLDER — every person below is fictional.
+// Replace with real, verified local candidates and elected officials before
+// launch. Do NOT present these as real people. Each record is tagged
+// `placeholder: true`, which drives the visible "sample content" notices.
+// ============================================================================
 
-export const candidates = [
+const rawCandidates = [
   {
     id: "c1",
     name: "Jordan Alvarez",
@@ -22,7 +26,7 @@ export const candidates = [
   },
 ];
 
-export const officials = [
+const rawOfficials = [
   {
     id: "o1",
     name: "Pat Nguyen",
@@ -48,3 +52,6 @@ export const officials = [
     level: "Local",
   },
 ];
+
+export const candidates = rawCandidates.map((c) => ({ ...c, placeholder: true }));
+export const officials = rawOfficials.map((o) => ({ ...o, placeholder: true }));

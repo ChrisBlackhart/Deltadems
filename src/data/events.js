@@ -1,8 +1,16 @@
-// Placeholder events — realistic, easy to replace.
-// `date` is ISO (YYYY-MM-DD). Categories drive the colored tag.
-// Reference "today" for this demo content is mid-July 2026.
+// ============================================================================
+// CONTENT STATUS: PLACEHOLDER — all events below are fictional samples.
+// Replace with real, verified events before launch. `date` is ISO
+// (YYYY-MM-DD); categories drive the colored tag. Each record is tagged
+// `placeholder: true`. NOTE: recurring monthly meeting facts live in
+// src/data/site.js (those ARE confirmed from the current site).
+//
+// Components read events through src/lib/events.js (the integration boundary),
+// not directly — so a future Google Calendar source can replace this file
+// without touching the event components. See README "Events".
+// ============================================================================
 
-export const events = [
+const rawEvents = [
   {
     id: "aug-monthly-meeting",
     title: "Monthly Membership Meeting",
@@ -74,7 +82,7 @@ export const events = [
 ];
 
 // Recent past events — proof the organization is active year-round.
-export const pastEvents = [
+const rawPastEvents = [
   {
     id: "july-meeting",
     title: "July Membership Meeting",
@@ -89,7 +97,7 @@ export const pastEvents = [
     date: "2026-06-14",
     category: "Social",
     location: "Ludington Park, Escanaba",
-    summary: "Neighbors, grills, and games along the bay — over 90 people joined us.",
+    summary: "Neighbors, grills, and games along the bay. [Sample event — replace with a real recap.]",
   },
   {
     id: "highway-cleanup",
@@ -100,3 +108,6 @@ export const pastEvents = [
     summary: "A morning of service keeping our stretch of highway clean.",
   },
 ];
+
+export const events = rawEvents.map((e) => ({ ...e, placeholder: true }));
+export const pastEvents = rawPastEvents.map((e) => ({ ...e, placeholder: true }));

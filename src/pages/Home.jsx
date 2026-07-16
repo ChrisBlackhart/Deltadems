@@ -12,7 +12,7 @@ import { SectionHeading } from "../components/ui/SectionHeading.jsx";
 import { Button } from "../components/ui/Button.jsx";
 import { FeatureCard } from "../components/ui/FeatureCard.jsx";
 import { NewsletterSignup } from "../components/forms/NewsletterSignup.jsx";
-import { events } from "../data/events.js";
+import { getUpcomingEvents } from "../lib/events.js";
 import { news } from "../data/news.js";
 import { votingSteps } from "../data/resources.js";
 import { mission, quickFacts } from "../data/about.js";
@@ -25,7 +25,7 @@ export default function Home() {
     "The Delta County Democratic Party organizes neighbors across Michigan's Upper Peninsula. Find our next meeting, upcoming events, ways to volunteer, and voting resources."
   );
 
-  const upcoming = events.slice(0, 3);
+  const upcoming = getUpcomingEvents({ limit: 3 });
 
   return (
     <>

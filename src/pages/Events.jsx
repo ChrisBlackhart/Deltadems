@@ -5,7 +5,7 @@ import { EventCard } from "../components/sections/EventCard.jsx";
 import { EmptyState } from "../components/sections/EmptyState.jsx";
 import { SectionHeading } from "../components/ui/SectionHeading.jsx";
 import { CtaBand } from "../components/sections/CtaBand.jsx";
-import { events, pastEvents } from "../data/events.js";
+import { getUpcomingEvents, getPastEvents } from "../lib/events.js";
 import pg from "./pages.module.css";
 
 export default function Events() {
@@ -13,6 +13,9 @@ export default function Events() {
     "Events",
     "Upcoming meetings, volunteer opportunities, and community events with the Delta County Democratic Party in Escanaba and across Delta County."
   );
+
+  const upcoming = getUpcomingEvents();
+  const past = getPastEvents({ limit: 3 });
 
   return (
     <>
@@ -29,9 +32,9 @@ export default function Events() {
 
           <SectionHeading eyebrow="Coming up" title="Upcoming events" />
           <div className={pg.center} />
-          {events.length > 0 ? (
+          {upcoming.length > 0 ? (
             <div className={pg.grid2}>
-              {events.map((ev, i) => (
+              {upcoming.map((ev, i) => (
                 <EventCard key={ev.id} event={ev} featured={i === 0} />
               ))}
             </div>
@@ -49,7 +52,7 @@ export default function Events() {
           </SectionHeading>
           <div className={pg.center} />
           <div className={pg.grid3}>
-            {pastEvents.map((ev) => (
+            {past.map((ev) => (
               <EventCard key={ev.id} event={ev} />
             ))}
           </div>

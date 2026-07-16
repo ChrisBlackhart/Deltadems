@@ -1,6 +1,10 @@
-// Placeholder announcements — swap with real posts.
+// ============================================================================
+// CONTENT STATUS: PLACEHOLDER — sample announcements only.
+// Replace with real posts before launch. No real quotes, statistics, or claims
+// are asserted here. Each record is tagged `placeholder: true`.
+// ============================================================================
 
-export const news = [
+const rawNews = [
   {
     id: "fall-organizing-2026",
     title: "Get ready: our fall organizing season kicks off in September",
@@ -19,10 +23,12 @@ export const news = [
   },
   {
     id: "picnic-recap",
-    title: "Recap: Community Picnic draws a record crowd",
+    title: "Recap: a great turnout at our community picnic",
     date: "2026-06-16",
     category: "Recap",
     excerpt:
-      "More than 90 neighbors joined us at Ludington Park for food, conversation, and a beautiful evening on the bay.",
+      "Neighbors joined us at Ludington Park for food, conversation, and a beautiful evening on the bay.",
   },
 ];
+
+export const news = rawNews.map((n) => ({ ...n, placeholder: true }));
