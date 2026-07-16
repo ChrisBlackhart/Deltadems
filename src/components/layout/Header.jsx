@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ChevronDown, Menu, X, Heart } from "lucide-react";
 import { Logo } from "../ui/Logo.jsx";
@@ -11,6 +11,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const toggleRef = useRef(null);
 
   // Close the mobile menu on route change.
   useEffect(() => {
@@ -31,6 +32,19 @@ export function Header() {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Close the mobile menu with Escape and return focus to the toggle button.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
     <header className={styles.header} data-scrolled={scrolled}>
@@ -53,7 +67,7 @@ export function Header() {
                     {item.label}
                     <ChevronDown className={styles.caret} aria-hidden="true" />
                   </NavLink>
-                  <ul className={styles.dropdown}>
+                  <ul className={styles.dropdown} aria-label={`${item.label} submenu`}>
                     {item.children.map((child) => (
                       <li key={child.to}>
                         <NavLink
@@ -93,9 +107,11 @@ export function Header() {
           </Button>
           <button
             type="button"
+            ref={toggleRef}
             className={styles.menuToggle}
             aria-expanded={open}
             aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}
           >
             {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}

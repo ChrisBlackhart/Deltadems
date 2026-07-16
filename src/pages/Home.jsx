@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { ArrowRight, Vote, Mail } from "lucide-react";
 import { useSeo } from "../lib/useSeo.js";
 import { Hero } from "../components/sections/Hero.jsx";

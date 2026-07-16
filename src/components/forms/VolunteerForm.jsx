@@ -47,7 +47,8 @@ export function VolunteerForm() {
 
   const toggleInterest = (label) => {
     const set = new Set(f.values["v-interests"]);
-    set.has(label) ? set.delete(label) : set.add(label);
+    if (set.has(label)) set.delete(label);
+    else set.add(label);
     f.setField("v-interests", [...set]);
   };
 
