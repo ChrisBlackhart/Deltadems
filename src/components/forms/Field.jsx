@@ -1,7 +1,9 @@
+import { AlertCircle } from "lucide-react";
 import styles from "./forms.module.css";
 
-// Accessible labelled field. Renders a textarea when `textarea` is set,
-// otherwise an input. Options render a <select>.
+// Accessible labelled field. Controlled when `value`/`onChange` are provided.
+// Shows a validation message tied to the control via aria-describedby, and sets
+// aria-invalid when errored. Renders textarea/select/input as appropriate.
 export function Field({
   id,
   label,
@@ -9,13 +11,23 @@ export function Field({
   required = false,
   textarea = false,
   options,
+  value,
+  onChange,
+  onBlur,
+  error,
   ...rest
 }) {
+  const errId = `${id}-error`;
   const controlProps = {
     id,
     name: id,
     required,
     className: styles.control,
+    value,
+    onChange,
+    onBlur,
+    "aria-invalid": error ? "true" : undefined,
+    "aria-describedby": error ? errId : undefined,
     ...rest,
   };
 
@@ -42,6 +54,12 @@ export function Field({
         </select>
       ) : (
         <input type={type} {...controlProps} />
+      )}
+      {error && (
+        <p id={errId} className={styles.error} role="alert">
+          <AlertCircle aria-hidden="true" />
+          {error}
+        </p>
       )}
     </div>
   );

@@ -67,6 +67,67 @@ textarea.control {
   flex: none;
 }
 
+.control[aria-invalid="true"] {
+  border-color: #d64545;
+}
+.control[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 3px #fbe3e3;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  color: #c0362c;
+  font-weight: 600;
+}
+.error svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+
+/* Honest demo acknowledgement — visually distinct from a real success. */
+.demo {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--gold-100);
+  border: 1px solid #f0d89a;
+  border-radius: var(--r-md);
+  color: #6b5200;
+}
+.demo svg {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  color: #b98900;
+  margin-top: 1px;
+}
+.demo strong {
+  color: #5f4600;
+  display: block;
+}
+
+.errorBox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 1rem 1.25rem;
+  background: #fdeaea;
+  border: 1px solid #f3c2c2;
+  border-radius: var(--r-md);
+  color: #92211b;
+}
+.errorBox svg {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  margin-top: 1px;
+}
+
 .success {
   display: flex;
   align-items: flex-start;
