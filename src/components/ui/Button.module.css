@@ -1,0 +1,106 @@
+.btn {
+  --btn-bg: var(--blue-600);
+  --btn-fg: #fff;
+  --btn-border: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  font-weight: 700;
+  font-size: var(--step-0);
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 2px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  border-radius: var(--r-pill);
+  padding: 0.85em 1.5em;
+  transition: transform 0.12s ease, box-shadow 0.16s ease, background 0.16s ease,
+    color 0.16s ease, border-color 0.16s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn:hover {
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn svg {
+  width: 1.1em;
+  height: 1.1em;
+  flex: none;
+}
+
+/* Variants */
+.primary {
+  --btn-bg: var(--blue-600);
+  --btn-fg: #fff;
+}
+.primary:hover {
+  --btn-bg: var(--navy-700);
+}
+
+.secondary {
+  --btn-bg: transparent;
+  --btn-fg: var(--navy-900);
+  --btn-border: var(--blue-100);
+  box-shadow: none;
+}
+.secondary:hover {
+  --btn-border: var(--blue-600);
+  --btn-bg: var(--blue-050);
+}
+
+.gold {
+  --btn-bg: var(--gold-500);
+  --btn-fg: #3a2a00;
+}
+.gold:hover {
+  --btn-bg: var(--gold-400);
+}
+
+.onDark {
+  --btn-bg: rgba(255, 255, 255, 0.12);
+  --btn-fg: #fff;
+  --btn-border: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(4px);
+}
+.onDark:hover {
+  --btn-bg: #fff;
+  --btn-fg: var(--navy-900);
+  --btn-border: #fff;
+}
+
+.ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--navy-900);
+  --btn-border: transparent;
+  box-shadow: none;
+  padding-inline: 0.6em;
+}
+.ghost:hover {
+  --btn-bg: var(--mist);
+}
+
+/* Sizes */
+.sm {
+  font-size: var(--step--1);
+  padding: 0.6em 1.1em;
+}
+.lg {
+  font-size: var(--step-1);
+  padding: 0.95em 1.9em;
+}
+
+@media (max-width: 480px) {
+  .fluidSm {
+    width: 100%;
+  }
+}

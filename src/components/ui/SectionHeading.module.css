@@ -1,0 +1,24 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 62ch;
+}
+
+.wrap[data-align="center"] {
+  align-items: center;
+  text-align: center;
+  margin-inline: auto;
+}
+
+.title {
+  font-size: var(--step-3);
+  font-weight: 800;
+}
+
+.intro {
+  font-size: var(--step-1);
+  color: var(--slate-700);
+  line-height: 1.55;
+  font-weight: 400;
+}

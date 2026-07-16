@@ -1,0 +1,47 @@
+.contactList {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+.contactList li {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  color: var(--slate-700);
+  line-height: 1.5;
+}
+.contactList strong {
+  color: var(--navy-900);
+}
+.contactList a {
+  color: var(--blue-600);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  flex: none;
+  border-radius: var(--r-md);
+  background: var(--blue-050);
+  color: var(--blue-600);
+}
+.icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.social {
+  margin-top: 2rem;
+}
+.socialLabel {
+  font-weight: 700;
+  color: var(--navy-800);
+  margin-bottom: 0.6rem;
+}

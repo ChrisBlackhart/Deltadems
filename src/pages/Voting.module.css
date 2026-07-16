@@ -1,0 +1,58 @@
+.dates {
+  list-style: none;
+  margin: 1.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+.dates li {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  color: var(--slate-700);
+  line-height: 1.5;
+}
+.dates strong {
+  color: var(--navy-900);
+}
+.dateIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: var(--r-md);
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--blue-600);
+}
+.dateIcon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.notice {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  padding: clamp(1.4rem, 3vw, 2rem);
+  background: var(--gold-100);
+  border: 1px solid #f0d89a;
+  border-radius: var(--r-lg);
+}
+.notice > svg {
+  width: 26px;
+  height: 26px;
+  flex: none;
+  color: #8a6100;
+}
+.notice h3 {
+  color: #5f4600;
+  font-size: var(--step-1);
+  margin-bottom: 0.4rem;
+}
+.notice p {
+  color: #6b5200;
+  line-height: 1.55;
+}

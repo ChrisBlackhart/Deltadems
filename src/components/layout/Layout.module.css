@@ -1,0 +1,28 @@
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  flex: 1 0 auto;
+}
+
+.skip {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -120%);
+  z-index: 200;
+  background: var(--navy-900);
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border-radius: 0 0 var(--r-sm) var(--r-sm);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.16s ease;
+}
+.skip:focus {
+  transform: translate(-50%, 0);
+  text-decoration: none;
+}

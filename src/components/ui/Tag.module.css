@@ -1,0 +1,34 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.32em 0.7em;
+  border-radius: var(--r-pill);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.tag[data-tone="navy"] {
+  background: var(--blue-050);
+  color: var(--navy-800);
+}
+.tag[data-tone="blue"] {
+  background: var(--blue-100);
+  color: var(--navy-700);
+}
+.tag[data-tone="gold"] {
+  background: var(--gold-100);
+  color: #7a5600;
+}
+.tag[data-tone="teal"] {
+  background: #d6f0f2;
+  color: #0f5c66;
+}
+.tag[data-tone="rose"] {
+  background: #fbe0e6;
+  color: #9a2749;
+}
