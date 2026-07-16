@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#071d6e" />
+      <stop offset="0.5" stop-color="#05185e" />
+      <stop offset="1" stop-color="#0a2472" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#f7c866" stop-opacity="0.9" />
+      <stop offset="0.6" stop-color="#f4b740" stop-opacity="0.3" />
+      <stop offset="1" stop-color="#f4b740" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <circle cx="980" cy="150" r="220" fill="url(#glow)" />
+
+  <!-- Lighthouse -->
+  <g transform="translate(920,120)">
+    <path d="M-8 60 L8 60 L18 300 L-18 300 Z" fill="#ffffff" />
+    <path d="M-12 130 L12 130 L14 165 L-14 165 Z" fill="#2064e2" />
+    <path d="M-15 210 L15 210 L17 245 L-17 245 Z" fill="#2064e2" />
+    <rect x="-16" y="42" width="32" height="20" rx="3" fill="#0a2472" />
+    <rect x="-13" y="18" width="26" height="26" rx="3" fill="#f4b740" />
+    <rect x="-9" y="22" width="18" height="18" rx="2" fill="#fff3d6" />
+    <path d="M-16 18 L16 18 L9 0 L-9 0 Z" fill="#05185e" />
+  </g>
+
+  <!-- Waves -->
+  <g stroke="#3b7bf0" stroke-width="5" fill="none" opacity="0.5" stroke-linecap="round">
+    <path d="M60 470 C140 450 220 500 300 470 C380 440 460 500 540 470" />
+    <path d="M700 500 C780 480 860 530 940 500 C1020 470 1100 530 1180 500" />
+  </g>
+
+  <!-- Wordmark -->
+  <text x="90" y="300" font-family="'Work Sans', system-ui, sans-serif" font-size="76" font-weight="800" fill="#ffffff" letter-spacing="-1">Delta County</text>
+  <text x="90" y="372" font-family="'Work Sans', system-ui, sans-serif" font-size="52" font-weight="600" fill="#f7c866" letter-spacing="2">DEMOCRATIC PARTY</text>
+  <text x="92" y="440" font-family="'Work Sans', system-ui, sans-serif" font-size="30" font-weight="500" fill="#dbe7fd">Escanaba &amp; Delta County · Michigan's Upper Peninsula</text>
+</svg>
