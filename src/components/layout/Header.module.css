@@ -22,11 +22,33 @@
 }
 
 .logoLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   text-decoration: none;
   flex: none;
 }
 .logoLink:hover {
   text-decoration: none;
+}
+
+.logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+.logoText strong {
+  color: var(--navy-900);
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.logoText span {
+  color: var(--slate-600);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 /* Desktop nav */

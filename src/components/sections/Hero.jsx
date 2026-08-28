@@ -1,7 +1,7 @@
 import { ArrowRight, CalendarClock, Users, MapPin } from "lucide-react";
 import { Button } from "../ui/Button.jsx";
 import { site } from "../../data/site.js";
-import { LighthouseScene } from "./LighthouseScene.jsx";
+import lighthouseHero from "../../assets/lighthouse-hero.jpg";
 import styles from "./Hero.module.css";
 
 export function Hero() {
@@ -45,7 +45,7 @@ export function Hero() {
         </div>
 
         <div className={styles.art} aria-hidden="true">
-          <LighthouseScene />
+          <img src={lighthouseHero} alt="" className={styles.artImg} />
         </div>
       </div>
       <div className={styles.wave} aria-hidden="true" />

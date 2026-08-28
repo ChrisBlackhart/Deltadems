@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { ChevronDown, Menu, X, Heart } from "lucide-react";
-import { Logo } from "../ui/Logo.jsx";
+import { DeltaDemsBadge } from "../ui/DeltaDemsBadge.jsx";
 import { Button } from "../ui/Button.jsx";
 import { navItems } from "../../data/nav.js";
 import { site } from "../../data/site.js";
@@ -50,7 +50,11 @@ export function Header() {
     <header className={styles.header} data-scrolled={scrolled}>
       <div className={`container ${styles.bar}`}>
         <Link to="/" className={styles.logoLink} aria-label={`${site.name} — home`}>
-          <Logo />
+          <DeltaDemsBadge size={40} />
+          <span className={styles.logoText}>
+            <strong>Delta County</strong>
+            <span>Democratic Party</span>
+          </span>
         </Link>
 
         <nav className={styles.desktopNav} aria-label="Primary">
