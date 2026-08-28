@@ -66,6 +66,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
+  min-height: 32px;
+  padding-block: 0.2rem;
   font-weight: 700;
   font-size: 0.92rem;
   color: var(--blue-600);

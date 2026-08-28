@@ -1,42 +1,30 @@
 import { Link } from "react-router-dom";
-import { Mail, MapPin, CalendarClock } from "lucide-react";
-import { Logo } from "../ui/Logo.jsx";
+import { Mail, MapPin, CalendarClock, Heart } from "lucide-react";
+import { DeltaDemsBadge } from "../ui/DeltaDemsBadge.jsx";
 import { SocialBar } from "../ui/SocialBar.jsx";
+import { CommitteeDisclaimer } from "../ui/CommitteeDisclaimer.jsx";
+import { Button } from "../ui/Button.jsx";
+import { footerNav } from "../../data/nav.js";
 import { site, meeting } from "../../data/site.js";
 import styles from "./Footer.module.css";
 
-const columns = [
-  {
-    title: "Explore",
-    links: [
-      { label: "About", to: "/about" },
-      { label: "Events", to: "/events" },
-      { label: "News", to: "/news" },
-      { label: "Contact", to: "/contact" },
-    ],
-  },
-  {
-    title: "Get involved",
-    links: [
-      { label: "Volunteer", to: "/get-involved/volunteer" },
-      { label: "Join / Subscribe", to: "/get-involved/join" },
-      { label: "Voting resources", to: "/voting" },
-      { label: "Candidates", to: "/candidates" },
-    ],
-  },
-];
-
 export function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={`${styles.footer} onDarkSurface`}>
       <div className={`container ${styles.top}`}>
         <div className={styles.brandCol}>
-          <Logo tone="light" />
+          <span className={styles.brandRow}>
+            <DeltaDemsBadge size={40} />
+            <span className={styles.brandText}>
+              <strong>Delta County</strong>
+              <span>Democratic Party</span>
+            </span>
+          </span>
           <p className={styles.tagline}>{site.tagline}</p>
           <SocialBar tone="dark" />
         </div>
 
-        {columns.map((col) => (
+        {footerNav.map((col) => (
           <nav key={col.title} className={styles.linksCol} aria-label={col.title}>
             <h2 className={styles.colTitle}>{col.title}</h2>
             <ul>
@@ -55,9 +43,9 @@ export function Footer() {
             <li>
               <CalendarClock aria-hidden="true" />
               <span>
-                {meeting.cadence}, {meeting.time}
+                {meeting.cadence}
                 <br />
-                {meeting.venue}, Escanaba
+                {meeting.time} · {meeting.venue}, Escanaba
               </span>
             </li>
             <li>
@@ -73,14 +61,17 @@ export function Footer() {
               <a href={`mailto:${site.email}`}>{site.email}</a>
             </li>
           </ul>
+          <Button href={site.ctas.donate} variant="gold" size="sm" className={styles.donate}>
+            <Heart aria-hidden="true" /> Donate
+          </Button>
         </div>
       </div>
 
       <div className={styles.bottom}>
         <div className={`container ${styles.bottomInner}`}>
-          <p className={styles.disclaimer}>{site.disclaimer}</p>
+          <CommitteeDisclaimer variant="footer" showAddress />
           <p className={styles.copyright}>
-            © {new Date().getFullYear()} {site.name}. All rights reserved.
+            © {new Date().getFullYear()} {site.name}
           </p>
         </div>
       </div>

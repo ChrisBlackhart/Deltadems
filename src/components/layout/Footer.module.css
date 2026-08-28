@@ -17,6 +17,35 @@
   gap: 1.1rem;
   max-width: 30ch;
 }
+
+.brandRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+.brandText strong {
+  color: #fff;
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.brandText span {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.donate {
+  margin-top: 1.1rem;
+  align-self: flex-start;
+}
 .tagline {
   color: rgba(255, 255, 255, 0.72);
   font-size: 0.98rem;
@@ -41,6 +70,11 @@
 }
 
 .linksCol a {
+  display: inline-flex;
+  align-items: center;
+  /* Enlarge the tap target without changing the visual rhythm (WCAG 2.5.8). */
+  min-height: 32px;
+  padding-block: 0.2rem;
   color: rgba(255, 255, 255, 0.8);
   font-weight: 500;
   text-decoration: none;

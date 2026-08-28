@@ -1,0 +1,27 @@
+.disclaimer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem 0.6rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.disclaimer[data-variant="footer"] {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.disclaimer[data-variant="inline"] {
+  color: var(--slate-600);
+  background: var(--mist);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 0.75rem 1rem;
+  font-weight: 500;
+}
+
+.address {
+  font-weight: 400;
+  opacity: 0.85;
+}

@@ -56,6 +56,45 @@
   margin-top: 2.25rem;
 }
 
+.verifyNote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  font-size: 0.82rem;
+  color: var(--slate-600);
+  text-align: center;
+}
+.verifyNote svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+  color: var(--gold-500);
+}
+
+.contactAlt {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.contactAlt li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.95rem;
+  color: var(--slate-700);
+}
+.contactAlt svg {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  color: var(--blue-600);
+}
+
 .subscribeTitle {
   font-size: var(--step-2);
   font-weight: 800;

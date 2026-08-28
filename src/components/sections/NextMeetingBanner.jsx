@@ -4,9 +4,6 @@ import { meeting } from "../../data/site.js";
 import { nextFirstWednesday, downloadMeetingIcs } from "../../lib/meeting.js";
 import styles from "./NextMeetingBanner.module.css";
 
-const mapsUrl =
-  "https://www.google.com/maps/search/?api=1&query=USW+Hall+1201+Sheridan+Rd+Escanaba+MI";
-
 export function NextMeetingBanner() {
   const next = nextFirstWednesday();
   const weekday = next.toLocaleDateString("en-US", { weekday: "long" });
@@ -30,7 +27,7 @@ export function NextMeetingBanner() {
               <MapPin aria-hidden="true" /> {meeting.venue}, {meeting.address}
             </li>
             <li>
-              <Video aria-hidden="true" /> {meeting.online}
+              <Video aria-hidden="true" /> {meeting.online} — {meeting.onlineNote}
             </li>
           </ul>
           <p className={styles.note}>{meeting.note}</p>
@@ -40,7 +37,7 @@ export function NextMeetingBanner() {
           <Button variant="gold" onClick={() => downloadMeetingIcs(next)}>
             <CalendarPlus aria-hidden="true" /> Add to calendar
           </Button>
-          <Button href={mapsUrl} variant="onDark">
+          <Button href={meeting.mapsUrl} variant="onDark">
             <MapPin aria-hidden="true" /> Get directions
           </Button>
         </div>

@@ -2,10 +2,10 @@
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .header[data-scrolled="true"] {
@@ -21,12 +21,14 @@
   min-height: 74px;
 }
 
+/* ---- Identity ---- */
 .logoLink {
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
   text-decoration: none;
   flex: none;
+  border-radius: var(--r-sm);
 }
 .logoLink:hover {
   text-decoration: none;
@@ -45,13 +47,13 @@
 }
 .logoText span {
   color: var(--slate-600);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
-/* Desktop nav */
+/* ---- Desktop nav (shown at >=940px) ---- */
 .desktopNav {
   display: none;
 }
@@ -65,16 +67,16 @@
 }
 
 .navLink {
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 0.2rem;
-  padding: 0.5rem 0.72rem;
+  padding: 0.55rem 0.7rem;
   border-radius: var(--r-sm);
   color: var(--navy-800);
   font-weight: 600;
-  font-size: 0.96rem;
+  font-size: 0.94rem;
   text-decoration: none;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background var(--transition), color var(--transition);
 }
 .navLink:hover {
   background: var(--mist);
@@ -82,60 +84,20 @@
 }
 .navLink.active {
   color: var(--blue-600);
-  background: var(--blue-050);
 }
-
-.caret {
-  width: 0.9rem;
-  height: 0.9rem;
-  opacity: 0.7;
-}
-
-/* Dropdown */
-.hasMenu {
-  position: relative;
-}
-.dropdown {
+/* Active indicator: a lighthouse-beam gold underline rather than a filled pill. */
+.navLink.active::after {
+  content: "";
   position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  min-width: 210px;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--r-md);
-  box-shadow: var(--shadow-lg);
-  padding: 0.4rem;
-  list-style: none;
-  margin: 0;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(6px);
-  transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s;
-}
-.hasMenu:hover .dropdown,
-.hasMenu:focus-within .dropdown {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-.dropLink {
-  display: block;
-  padding: 0.55rem 0.7rem;
-  border-radius: var(--r-sm);
-  color: var(--navy-800);
-  font-weight: 600;
-  font-size: 0.94rem;
-  text-decoration: none;
-}
-.dropLink:hover {
-  background: var(--mist);
-  text-decoration: none;
-}
-.dropLink.active {
-  color: var(--blue-600);
+  left: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.22rem;
+  height: 3px;
+  border-radius: var(--r-pill);
+  background: var(--gold-500);
 }
 
-/* Actions */
+/* ---- Actions ---- */
 .actions {
   display: flex;
   align-items: center;
@@ -151,72 +113,77 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: var(--tap-min);
+  height: var(--tap-min);
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
   background: #fff;
   color: var(--navy-900);
   cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+}
+.menuToggle:hover {
+  background: var(--mist);
+  border-color: var(--blue-100);
 }
 .menuToggle svg {
   width: 22px;
   height: 22px;
 }
 
-/* Mobile drawer */
+/* ---- Mobile drawer ---- */
 .drawer {
   border-top: 1px solid var(--line);
   background: #fff;
-  max-height: calc(100vh - 74px);
+  max-height: calc(100dvh - 74px);
   overflow-y: auto;
-}
-.drawer[data-open="true"] {
-  animation: slideDown 0.2s ease;
+  animation: slideDown 0.18s ease;
 }
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-6px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
+@media (prefers-reduced-motion: reduce) {
+  .drawer {
+    animation: none;
+  }
+}
+
 .drawerInner {
-  padding: 1rem var(--gutter) 1.5rem;
+  padding: 0.75rem var(--gutter) 1.5rem;
 }
 .drawerList {
   list-style: none;
   margin: 0 0 1rem;
+  padding: 0;
   display: flex;
   flex-direction: column;
 }
 .drawerLink {
-  display: block;
-  padding: 0.85rem 0.5rem;
-  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  min-height: var(--tap-min);
+  padding: 0.75rem 0.5rem;
+  font-size: 1.08rem;
   font-weight: 700;
   color: var(--navy-900);
   border-bottom: 1px solid var(--line);
   text-decoration: none;
 }
-.drawerLink.active {
+.drawerLink:hover {
+  text-decoration: none;
   color: var(--blue-600);
 }
-.drawerSub {
-  list-style: none;
-  margin: 0;
-  padding: 0 0 0.4rem 0.75rem;
-}
-.drawerSubLink {
-  display: block;
-  padding: 0.55rem 0.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--slate-700);
-  text-decoration: none;
+.drawerLink.active {
+  color: var(--blue-600);
+  box-shadow: inset 3px 0 0 var(--gold-500);
+  padding-left: 0.85rem;
 }
 .drawerDonate {
   width: 100%;

@@ -69,8 +69,39 @@
   --font-sans: "Work Sans Variable", "Work Sans", system-ui, -apple-system,
     "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
+  /* Section rhythm — use these instead of ad-hoc padding on each section. */
+  --space-section: clamp(3rem, 7vw, 6rem);
+  --space-section-tight: clamp(2rem, 4vw, 3.5rem);
+  --space-stack: clamp(1.5rem, 3vw, 2.5rem);
+
+  /* Card surface — shared by every card-like component. */
+  --card-bg: var(--white);
+  --card-border: var(--line);
+  --card-radius: var(--r-lg);
+  --card-pad: clamp(1.25rem, 3vw, 1.5rem);
+
+  /* Interaction */
+  --focus-ring: 3px solid var(--blue-500);
+  --focus-offset: 2px;
+  --lift: translateY(-3px);
+  --transition: 0.16s ease;
+
+  /* Minimum accessible touch target (WCAG 2.5.8). */
+  --tap-min: 44px;
+
   color-scheme: light;
 }
+
+/* ---------------------------------------------------------------------------
+   BREAKPOINTS (reference — CSS custom properties can't be used in media
+   queries, so these are documented here and used literally in components):
+     --bp-sm   480px   small phone
+     --bp-md   640px   phone / large phone
+     --bp-lg   860px   tablet
+     --bp-xl   940px   header switches to desktop nav
+     --bp-2xl 1200px   wide desktop
+   Always design mobile-first and add min-width queries.
+   --------------------------------------------------------------------------- */
 
 /* ---- Reset ---- */
 *,
@@ -158,9 +189,14 @@ ol {
 }
 
 :focus-visible {
-  outline: 3px solid var(--blue-500);
-  outline-offset: 2px;
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-offset);
   border-radius: 4px;
+}
+
+/* Focus stays visible on dark surfaces too. */
+.onDarkSurface :focus-visible {
+  outline-color: var(--gold-400);
 }
 
 /* ---- Layout helpers ---- */
@@ -176,11 +212,17 @@ ol {
 }
 
 .section {
-  padding-block: clamp(3rem, 7vw, 6rem);
+  padding-block: var(--space-section);
 }
 
 .section--tight {
-  padding-block: clamp(2rem, 4vw, 3.5rem);
+  padding-block: var(--space-section-tight);
+}
+
+/* Alternating tinted band — used to separate adjacent sections. */
+.section--tinted {
+  background: var(--paper);
+  border-block: 1px solid var(--line);
 }
 
 .eyebrow {

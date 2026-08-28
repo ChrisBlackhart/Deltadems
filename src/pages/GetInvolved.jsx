@@ -73,7 +73,7 @@ export default function GetInvolved() {
                 securely through ActBlue.
               </p>
             </div>
-            <Button href={site.links.actblue} variant="gold" size="lg">
+            <Button href={site.ctas.donate} variant="gold" size="lg">
               <Heart aria-hidden="true" /> Donate via ActBlue
             </Button>
           </div>

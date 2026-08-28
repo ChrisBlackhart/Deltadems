@@ -1,23 +1,33 @@
-import { ArrowRight, Vote, Mail } from "lucide-react";
+import { ArrowRight, Vote, Mail, MapPin, AlertTriangle } from "lucide-react";
 import { useSeo } from "../lib/useSeo.js";
 import { Hero } from "../components/sections/Hero.jsx";
 import { NextMeetingBanner } from "../components/sections/NextMeetingBanner.jsx";
 import { InvolvementGrid } from "../components/sections/InvolvementGrid.jsx";
 import { EventCard } from "../components/sections/EventCard.jsx";
 import { EmptyState } from "../components/sections/EmptyState.jsx";
-import { NewsCard } from "../components/sections/NewsCard.jsx";
-import { CtaBand } from "../components/sections/CtaBand.jsx";
 import { SectionHeading } from "../components/ui/SectionHeading.jsx";
 import { Button } from "../components/ui/Button.jsx";
 import { FeatureCard } from "../components/ui/FeatureCard.jsx";
 import { NewsletterSignup } from "../components/forms/NewsletterSignup.jsx";
 import { getUpcomingEvents } from "../lib/events.js";
-import { news } from "../data/news.js";
-import { votingSteps } from "../data/resources.js";
+import { votingSteps, votingHomeUrl } from "../data/resources.js";
 import { mission, quickFacts } from "../data/about.js";
+import { site } from "../data/site.js";
 import pg from "./pages.module.css";
 import styles from "./Home.module.css";
 
+/**
+ * Homepage.
+ *
+ * Section order answers, in order, the four questions a first-time visitor has:
+ *   Hero            → who are these people, and what do they want from me?
+ *   Next meeting    → when can I actually meet them?          (highest-value fact)
+ *   Upcoming events → are they doing anything?
+ *   Who we are      → can I trust them?
+ *   Get involved    → how do I participate?
+ *   Voting          → what can this site do for me right now?
+ *   Stay connected  → how do I hear from them again?
+ */
 export default function Home() {
   useSeo(
     "",
@@ -30,35 +40,19 @@ export default function Home() {
     <>
       <Hero />
 
-      {/* Next meeting — overlaps the hero wave */}
+      {/* 2 — Next meeting. Overlaps the hero wave so it reads as the first
+             thing "inside" the page. */}
       <div className={styles.meetingWrap}>
         <div className="container">
           <NextMeetingBanner />
         </div>
       </div>
 
-      {/* Ways to get involved */}
-      <section className="section">
-        <div className="container">
-          <SectionHeading
-            eyebrow="Start here"
-            title="Ways to get involved"
-            align="center"
-          >
-            However much time you have, there's a way to make a difference close
-            to home.
-          </SectionHeading>
-          <div className={styles.involvement}>
-            <InvolvementGrid />
-          </div>
-        </div>
-      </section>
-
-      {/* Upcoming events */}
-      <section className={`section ${styles.tinted}`}>
+      {/* 3 — Upcoming events */}
+      <section className="section" aria-labelledby="home-events">
         <div className="container">
           <div className={pg.headRow}>
-            <SectionHeading eyebrow="What's next" title="Upcoming events">
+            <SectionHeading eyebrow="What's next" title="Upcoming events" id="home-events">
               We're out in the community all year. Come find us.
             </SectionHeading>
             <Button to="/events" variant="secondary">
@@ -77,11 +71,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* About teaser */}
-      <section className="section">
+      {/* 4 — Who we are */}
+      <section className="section section--tinted" aria-labelledby="home-about">
         <div className={`container ${pg.split}`}>
           <div>
-            <SectionHeading eyebrow="Who we are" title="Local Democrats, rooted in the U.P.">
+            <SectionHeading
+              eyebrow="Who we are"
+              title="Local Democrats, rooted in the U.P."
+              id="home-about"
+            >
               {mission}
             </SectionHeading>
             <div className={styles.aboutActions}>
@@ -101,16 +99,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Voting resources highlight */}
-      <section className={`section ${styles.tinted}`}>
+      {/* 5 — Get involved */}
+      <section className="section" aria-labelledby="home-involved">
+        <div className="container">
+          <SectionHeading
+            eyebrow="Start here"
+            title="Ways to get involved"
+            align="center"
+            id="home-involved"
+          >
+            However much time you have, there's a way to make a difference close to
+            home.
+          </SectionHeading>
+          <div className={styles.involvement}>
+            <InvolvementGrid />
+          </div>
+        </div>
+      </section>
+
+      {/* 6 — Voting resources */}
+      <section className="section section--tinted" aria-labelledby="home-voting">
         <div className="container">
           <SectionHeading
             eyebrow="Be ready to vote"
             title="Voting resources for Delta County"
             align="center"
+            id="home-voting"
           >
-            Everything you need to register, request an absentee ballot, and make
-            your voice heard in Michigan.
+            Register, check your registration, request an absentee ballot, and find
+            your local clerk.
           </SectionHeading>
           <div className={styles.center} />
           <div className={pg.grid4}>
@@ -130,50 +147,48 @@ export default function Home() {
               <Vote aria-hidden="true" /> All voting resources
             </Button>
           </div>
+          {/* Build-time reminder for the team; see src/data/resources.js. */}
+          <p className={styles.verifyNote}>
+            <AlertTriangle aria-hidden="true" />
+            Official links pending human verification before launch — see{" "}
+            <a href={votingHomeUrl} target="_blank" rel="noreferrer">
+              michigan.gov/vote
+            </a>
+            .
+          </p>
         </div>
       </section>
 
-      {/* News */}
-      <section className="section">
-        <div className="container">
-          <div className={pg.headRow}>
-            <SectionHeading eyebrow="Latest updates" title="News & announcements">
-              Proof we don't disappear between elections.
-            </SectionHeading>
-            <Button to="/news" variant="secondary">
-              All news <ArrowRight aria-hidden="true" />
-            </Button>
-          </div>
-          <div className={pg.grid3}>
-            {news.map((n) => (
-              <NewsCard key={n.id} item={n} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Newsletter */}
-      <section className={`section ${styles.tinted}`}>
+      {/* 7 — Stay connected */}
+      <section className="section" aria-labelledby="home-connect">
         <div className={`container ${pg.split}`}>
           <div>
-            <span className="eyebrow">
-              <Mail aria-hidden="true" size={16} /> Stay in the loop
-            </span>
-            <h2 className={styles.subscribeTitle}>
+            <p className="eyebrow">
+              <Mail aria-hidden="true" size={16} /> Stay connected
+            </p>
+            <h2 className={styles.subscribeTitle} id="home-connect">
               Get meeting reminders & local updates
             </h2>
             <p className={styles.subscribeText}>
-              One friendly email a couple times a month — event invites, volunteer
-              opportunities, and important deadlines. No spam, ever.
+              A couple of emails a month — event invites, volunteer opportunities,
+              and important deadlines.
             </p>
+            <ul className={styles.contactAlt}>
+              <li>
+                <Mail aria-hidden="true" />
+                <a href={`mailto:${site.email}`}>{site.email}</a>
+              </li>
+              <li>
+                <MapPin aria-hidden="true" />
+                {site.mailing.full}
+              </li>
+            </ul>
           </div>
           <div className={pg.panel}>
             <NewsletterSignup />
           </div>
         </div>
       </section>
-
-      <CtaBand />
     </>
   );
 }

@@ -24,7 +24,7 @@ export function CtaBand({
             {primary.label} <ArrowRight aria-hidden="true" />
           </Button>
           {showDonate && (
-            <Button href={site.links.actblue} variant="onDark" size="lg">
+            <Button href={site.ctas.donate} variant="onDark" size="lg">
               <Heart aria-hidden="true" /> Donate
             </Button>
           )}

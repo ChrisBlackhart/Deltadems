@@ -34,7 +34,7 @@ export default function About() {
             </p>
             <p>
               As part of the{" "}
-              <a href={site.links.michiganDems} target="_blank" rel="noreferrer">
+              <a href={site.ctas.michiganDems} target="_blank" rel="noreferrer">
                 Michigan Democratic Party
               </a>
               , we connect Delta County to a statewide movement — while keeping our
