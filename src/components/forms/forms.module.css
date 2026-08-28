@@ -176,6 +176,16 @@ textarea.control {
   }
 }
 
+/* Off-screen (not display:none — some bots skip hidden fields on purpose). */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .inline {
   display: flex;
   gap: 0.6rem;

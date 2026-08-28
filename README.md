@@ -95,20 +95,73 @@ marking it as `CONFIRMED` (from the current live site) or `PLACEHOLDER`.
 
 Do **not** present placeholder people, events, quotes, or statistics as real.
 
-## Forms
+## Forms & email delivery
 
-Contact, Volunteer, and Newsletter forms **validate input** (required fields,
-email format, accessible inline errors) but do **not** send anything while
-`config.formMode === "demo"` — they show an honest "nothing was sent" notice.
-No submissions are stored.
+Contact, Volunteer, and Newsletter forms validate input client-side (required
+fields, email format, accessible inline errors) and then POST to
+**`api/submit.js`**, a Vercel Serverless Function (`config.formMode =
+"endpoint"`, `config.formsEndpoint = "/api/submit"`) that validates again
+server-side and delivers the submission by email.
 
-To enable real delivery (no component changes required):
+**Delivery method:** Gmail SMTP via [nodemailer](https://nodemailer.com),
+authenticated with a Gmail **App Password** on the organization's own
+`DeltaDemsMI@gmail.com` account — chosen specifically because it requires no
+DNS/domain changes and no new third-party account. No database; nothing is
+stored, only relayed by email.
 
-1. Add a Vercel serverless route (e.g. `api/contact.js`) or an approved form
-   provider. **Do not add a database.**
-2. Set `config.formMode = "endpoint"` and `config.formsEndpoint` to the route.
-3. The route validates again server-side and delivers (e.g. email). The
-   `submitForm()` boundary in `src/lib/forms.js` already handles success/error.
+### Required environment variables
+
+Set these in the Vercel dashboard (Project Settings → Environment Variables),
+and copy `.env.example` to `.env.local` for local testing with `vercel dev`:
+
+| Variable | Value |
+| --- | --- |
+| `GMAIL_USER` | `DeltaDemsMI@gmail.com` (the address forms send from and to) |
+| `GMAIL_APP_PASSWORD` | A Gmail **App Password**, not the account's login password |
+
+**To generate the App Password:**
+1. The `DeltaDemsMI@gmail.com` account must have **2-Step Verification**
+   already turned on (Google Account → Security). If it isn't on yet, someone
+   with access to that account needs to enable it first.
+2. Go to <https://myaccount.google.com/apppasswords>, sign in as
+   `DeltaDemsMI@gmail.com`, and generate a new App Password (any label works,
+   e.g. "Website forms").
+3. Paste the generated 16-character password as `GMAIL_APP_PASSWORD`.
+
+Without both variables set, the endpoint fails clearly (a real error, not a
+fake success) with a message pointing the visitor to email the org directly —
+it never pretends a message was sent when it wasn't.
+
+### Local development note
+
+`npm run dev` (Vite) does **not** run `/api/submit.js` — Vite's dev server has
+no serverless-function emulation, so submitting a form locally will honestly
+show a "couldn't submit" error. To test the real endpoint locally, use the
+[Vercel CLI](https://vercel.com/docs/cli)'s `vercel dev` (with `.env.local`
+set), or push to a branch and test on its Vercel Preview deployment.
+
+### Spam protection
+
+- **Honeypot** — every form includes a hidden field (`website`) that is
+  removed from the tab order and hidden from assistive tech, so a real visitor
+  can never fill it in. If it's non-empty, the submission is silently dropped
+  (the endpoint responds as if it succeeded, so an automated script gets no
+  useful feedback) — see `HoneypotField.jsx`.
+- **Timing signal** — a too-fast submission (under ~1 second) is flagged in
+  the email subject/body for human review, but is **still delivered** — a
+  fast-but-genuine submission is never silently discarded just for being fast.
+- **Rate limiting** — a best-effort, **per-instance-only** in-memory limiter
+  (8 requests / 10 minutes / IP). Serverless functions run across many
+  independent, frequently-recycled instances with no shared memory, so this is
+  *not* a reliable distributed rate limit — only defense-in-depth against a
+  single instance being hammered in a burst. A real distributed limit would
+  need external state (e.g. Vercel KV / Upstash Redis), intentionally out of
+  scope for this phase.
+- **Origin check** — soft rejection of requests whose `Origin` header doesn't
+  match the site, `*.vercel.app`, or `localhost`. A missing `Origin` header is
+  allowed (some legitimate clients omit it).
+- Deliberately **not** using a CAPTCHA — it adds friction for legitimate
+  visitors that the above protections don't currently justify.
 
 ## Events
 

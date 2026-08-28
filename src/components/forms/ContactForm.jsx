@@ -1,6 +1,7 @@
 import { Send, Info } from "lucide-react";
 import { Field } from "./Field.jsx";
 import { FormStatus } from "./FormStatus.jsx";
+import { HoneypotField } from "./HoneypotField.jsx";
 import { useForm } from "./useForm.js";
 import { Button } from "../ui/Button.jsx";
 import { required, isEmail } from "../../lib/forms.js";
@@ -49,6 +50,7 @@ export function ContactForm() {
 
   return (
     <form className={styles.form} onSubmit={f.handleSubmit} noValidate>
+      <HoneypotField {...f.honeypot} />
       <FormStatus status={f.status} submitError={f.submitError} />
       <div className={styles.row}>
         <Field id="c-name" label="Name" required autoComplete="name" placeholder="Your name" {...bind("c-name")} />

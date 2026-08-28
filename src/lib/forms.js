@@ -34,7 +34,20 @@ export async function submitForm(formName, data) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ form: formName, ...data }),
     });
-    if (!res.ok) throw new Error(`Request failed (${res.status})`);
+
+    // The endpoint always returns a JSON body, even on failure — prefer its
+    // message (it's written to be safe to show a visitor) over a generic one.
+    let payload = null;
+    try {
+      payload = await res.json();
+    } catch {
+      // Non-JSON response (e.g. a platform-level error page) — fall through
+      // to the generic message below.
+    }
+
+    if (!res.ok || !payload?.ok) {
+      throw new Error(payload?.error || `Something went wrong (${res.status}). Please try again.`);
+    }
     return { status: "success" };
   } catch (err) {
     return { status: "error", message: err.message };

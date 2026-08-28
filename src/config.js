@@ -17,11 +17,11 @@ export const config = {
   // ---- Form delivery ----
   // How contact/volunteer/newsletter forms behave.
   //   "demo"       → validates input, but does NOT send; shows an honest notice.
-  //   "endpoint"   → POSTs to `formsEndpoint` (a Vercel serverless route or
-  //                  approved form provider). Not enabled until a delivery
-  //                  method is configured and approved.
-  formMode: "demo",
-  formsEndpoint: "", // e.g. "/api/contact" once a serverless function exists
+  //   "endpoint"   → POSTs to `formsEndpoint` (api/submit.js), which delivers
+  //                  by email via Gmail SMTP. See README "Forms & email
+  //                  delivery" for the two required environment variables.
+  formMode: "endpoint",
+  formsEndpoint: "/api/submit",
 
   // ---- Events source ----
   // Where event data comes from. Only "static" is implemented today; the events
