@@ -14,14 +14,38 @@ export const config = {
   // until then).
   siteUrl: "https://deltadems-concept.vercel.app",
 
-  // ---- Form delivery ----
-  // How contact/volunteer/newsletter forms behave.
-  //   "demo"       → validates input, but does NOT send; shows an honest notice.
-  //   "endpoint"   → POSTs to `formsEndpoint` (api/submit.js), which delivers
-  //                  by email via Gmail SMTP. See README "Forms & email
-  //                  delivery" for the two required environment variables.
-  formMode: "endpoint",
-  formsEndpoint: "/api/submit",
+  // ---- Form submission ----
+  // Which delivery provider the contact/volunteer/newsletter forms use.
+  // Implementations live in src/lib/submit/; the app itself is unaware of them.
+  //
+  //   "demo"          validates and acknowledges honestly WITHOUT sending.
+  //                   Logs the exact row it would POST, so the field-to-column
+  //                   mapping stays verifiable with no backend. Default while
+  //                   the site is being built.
+  //
+  //   "genesis"       POSTs the row to PostgREST through the project's
+  //                   SP_PUBLIC_FORMS route. The committed database row IS the
+  //                   successful submission; notification is separate and
+  //                   cannot affect it. Needs `genesis.formsPath` below and
+  //                   VITE_GENESIS_ANON_KEY. This is the deployment target.
+  //
+  //   "vercel-legacy" POSTs to api/submit.js (Gmail SMTP via nodemailer).
+  //                   Retained only for the existing Vercel preview. Cannot run
+  //                   on Genesis — outbound SMTP is blocked there — and retires
+  //                   with api/submit.js at cutover.
+  submitMode: "demo",
+
+  // Used when submitMode is "genesis". `formsPath` must match the api-path in
+  // SP_PUBLIC_FORMS=<api-path>:<table> in projects/deltadems/project.conf.
+  // The anon key is public by design and comes from VITE_GENESIS_ANON_KEY.
+  genesis: {
+    formsPath: "/api/inquiries",
+  },
+
+  // Used when submitMode is "vercel-legacy". Temporary.
+  vercelLegacy: {
+    endpoint: "/api/submit",
+  },
 
   // ---- Events source ----
   // Where event data comes from. Only "static" is implemented today; the events

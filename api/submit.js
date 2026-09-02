@@ -1,7 +1,14 @@
 // ============================================================================
-// Vercel Serverless Function — handles the Contact, Volunteer, and Newsletter
-// forms. This is the server-side counterpart to the `submitForm()` seam in
-// src/lib/forms.js (config.formMode === "endpoint" points there).
+// LEGACY — Vercel Serverless Function. Retires at Genesis cutover.
+//
+// Reached only when config.submitMode === "vercel-legacy" (see
+// src/lib/submit/vercel.js). It is NOT the target architecture and cannot run
+// on Genesis: DigitalOcean blocks outbound SMTP on 25/465/587 from that
+// droplet, and Gmail publishes no alternate port. The Genesis path posts
+// straight to PostgREST instead — see src/lib/submit/genesis.js and
+// db/001-inquiries.sql.
+//
+// Handles the Contact, Volunteer, and Newsletter forms.
 //
 // Delivery: Gmail SMTP via nodemailer, authenticated with a Gmail App
 // Password. Chosen because it requires NO DNS/domain changes and NO new

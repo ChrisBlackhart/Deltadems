@@ -51,9 +51,12 @@ src/
     involvement.js     Homepage "ways to get involved" cards
     resources.js       Voting resources (real Michigan SOS links)
     volunteer.js       Volunteer roles
+    routes.js          Public routes — single source for the generated sitemap
   lib/
     events.js          Events integration boundary (static now, Google later)
-    forms.js           Form submission boundary + validators
+    forms.js           Validators + the public submitForm() entry point
+    inquiry.js         Maps form fields → database columns (pure)
+    submit/            Delivery providers: demo, genesis, vercel (legacy)
     meeting.js         Next-meeting date + .ics calendar file
     useSeo.js          Per-page title/description/canonical/OG tags
     date.js            Date formatting helpers
@@ -63,9 +66,15 @@ src/
     sections/          Hero, NextMeetingBanner, EventCard, InvolvementGrid, …
     forms/             Field, useForm, FormStatus, Contact/Volunteer/Newsletter
   pages/               One file per route
+db/
+  001-inquiries.sql    Form submissions table for Genesis (prepared, not applied)
 public/
-  favicon.svg, og-image.svg, robots.txt, sitemap.xml
+  favicon.svg, og-image.svg
 ```
+
+`robots.txt` and `sitemap.xml` are **generated into `dist/` at build time**
+from `config.siteUrl` + `src/data/routes.js` (see `vite.config.js`), so the
+canonical domain lives in exactly one place.
 
 ## Configuration
 
@@ -75,8 +84,9 @@ All launch-time switches live in **`src/config.js`**:
 | --- | --- |
 | `showConceptNotice` | Shows/hides the "redesign concept" banner. Set to `false` to remove before launch. |
 | `siteUrl` | Canonical production URL for SEO/canonical/OG tags and the sitemap. Update at domain launch. |
-| `formMode` | `"demo"` (validate only, nothing sent) or `"endpoint"` (POST to a serverless route). |
-| `formsEndpoint` | The route used when `formMode` is `"endpoint"`. |
+| `submitMode` | Form delivery provider: `"demo"`, `"genesis"`, or `"vercel-legacy"`. See [Forms](#forms). |
+| `genesis.formsPath` | API path for the Genesis PostgREST form route (must match `SP_PUBLIC_FORMS`). |
+| `vercelLegacy.endpoint` | Route used by the legacy Vercel provider. Temporary. |
 | `eventsSource` | `"static"` (local data) or `"google"` (future Google Calendar). |
 | `analytics` | Analytics provider toggle (none wired yet). |
 
@@ -95,73 +105,91 @@ marking it as `CONFIRMED` (from the current live site) or `PLACEHOLDER`.
 
 Do **not** present placeholder people, events, quotes, or statistics as real.
 
-## Forms & email delivery
+## Forms
 
 Contact, Volunteer, and Newsletter forms validate input client-side (required
-fields, email format, accessible inline errors) and then POST to
-**`api/submit.js`**, a Vercel Serverless Function (`config.formMode =
-"endpoint"`, `config.formsEndpoint = "/api/submit"`) that validates again
-server-side and delivers the submission by email.
+fields, email format, accessible inline errors), then hand the submission to a
+**delivery provider** chosen by `config.submitMode`. The application never
+knows how a submission is delivered.
 
-**Delivery method:** Gmail SMTP via [nodemailer](https://nodemailer.com),
-authenticated with a Gmail **App Password** on the organization's own
-`DeltaDemsMI@gmail.com` account — chosen specifically because it requires no
-DNS/domain changes and no new third-party account. No database; nothing is
-stored, only relayed by email.
+```
+form component → useForm → submitForm() → src/lib/submit/<provider>.js
+                                ↑
+                        src/lib/inquiry.js
+                    (maps fields → database columns)
+```
 
-### Required environment variables
-
-Set these in the Vercel dashboard (Project Settings → Environment Variables),
-and copy `.env.example` to `.env.local` for local testing with `vercel dev`:
-
-| Variable | Value |
+| Mode | Behaviour |
 | --- | --- |
-| `GMAIL_USER` | `DeltaDemsMI@gmail.com` (the address forms send from and to) |
-| `GMAIL_APP_PASSWORD` | A Gmail **App Password**, not the account's login password |
+| `"demo"` | **Default while building.** Validates and acknowledges honestly *without* sending; the UI says "nothing was sent". Also logs the exact row it would POST, so the field-to-column mapping stays verifiable with no backend, no credentials and no email setup. |
+| `"genesis"` | POSTs the row to PostgREST through the project's `SP_PUBLIC_FORMS` route. **This is the deployment target.** |
+| `"vercel-legacy"` | POSTs to `api/submit.js` (Gmail SMTP via nodemailer). Retained only for the existing Vercel preview; retires at cutover. |
 
-**To generate the App Password:**
-1. The `DeltaDemsMI@gmail.com` account must have **2-Step Verification**
-   already turned on (Google Account → Security). If it isn't on yet, someone
-   with access to that account needs to enable it first.
-2. Go to <https://myaccount.google.com/apppasswords>, sign in as
-   `DeltaDemsMI@gmail.com`, and generate a new App Password (any label works,
-   e.g. "Website forms").
-3. Paste the generated 16-character password as `GMAIL_APP_PASSWORD`.
+Adding a provider later — the eventual SPS notification system, a queue, a
+different host — means one new file in `src/lib/submit/` and one mode name. No
+component, form or validation code changes.
 
-Without both variables set, the endpoint fails clearly (a real error, not a
-fake success) with a message pointing the visitor to email the org directly —
-it never pretends a message was sent when it wasn't.
+### The Genesis path
 
-### Local development note
+Genesis needs **no application server and no function** for forms. The project
+declares a public form route in `projects/deltadems/project.conf`:
 
-`npm run dev` (Vite) does **not** run `/api/submit.js` — Vite's dev server has
-no serverless-function emulation, so submitting a form locally will honestly
-show a "couldn't submit" error. To test the real endpoint locally, use the
-[Vercel CLI](https://vercel.com/docs/cli)'s `vercel dev` (with `.env.local`
-set), or push to a branch and test on its Vercel Preview deployment.
+```ini
+SP_PUBLIC_FORMS=inquiries:inquiries      # <api-path>:<table>
+```
 
-### Spam protection
+`omega render` turns that into an Envoy route — `POST /api/inquiries` →
+PostgREST `/inquiries` — that accepts POST only and is rate-limited at the
+edge. The database is the endpoint.
 
-- **Honeypot** — every form includes a hidden field (`website`) that is
-  removed from the tab order and hidden from assistive tech, so a real visitor
-  can never fill it in. If it's non-empty, the submission is silently dropped
-  (the endpoint responds as if it succeeded, so an automated script gets no
-  useful feedback) — see `HoneypotField.jsx`.
-- **Timing signal** — a too-fast submission (under ~1 second) is flagged in
-  the email subject/body for human review, but is **still delivered** — a
-  fast-but-genuine submission is never silently discarded just for being fast.
-- **Rate limiting** — a best-effort, **per-instance-only** in-memory limiter
-  (8 requests / 10 minutes / IP). Serverless functions run across many
-  independent, frequently-recycled instances with no shared memory, so this is
-  *not* a reliable distributed rate limit — only defense-in-depth against a
-  single instance being hammered in a burst. A real distributed limit would
-  need external state (e.g. Vercel KV / Upstash Redis), intentionally out of
-  scope for this phase.
-- **Origin check** — soft rejection of requests whose `Origin` header doesn't
-  match the site, `*.vercel.app`, or `localhost`. A missing `Origin` header is
-  allowed (some legitimate clients omit it).
-- Deliberately **not** using a CAPTCHA — it adds friction for legitimate
-  visitors that the above protections don't currently justify.
+**The committed database row is the successful submission.** A `201` means the
+row is durable. Notification reads that row out of band and can never affect
+whether the submission succeeded — which is why there is no email code in this
+path, and why there does not need to be.
+
+The table is defined in **`db/001-inquiries.sql`** (prepared, not yet applied).
+It follows the same security shape as Sand Point's own inquiry table:
+
+- **Subtractive grants** — `REVOKE ALL`, then `GRANT INSERT` on eleven named
+  columns. The strongest thing an anon key can do is insert those columns: not
+  select, not update, not delete.
+- **Insert-only RLS** as an independent second layer.
+- **CHECK constraints** for required fields, lengths and the availability
+  allowlist — the enforcement point the browser copy is only a courtesy to.
+- **A `BEFORE INSERT` trigger** that silently drops honeypot hits (`RETURN
+  NULL`, so a bot gets the same `201` and learns nothing), normalises text,
+  sets server-owned columns, and throttles repeat submissions per address.
+
+Anti-spam signals `website` (honeypot) and `elapsed_ms` are sent on every
+submission. Both **must** be in the INSERT grant: PostgREST rejects a payload
+containing a column the caller cannot write, so omitting the honeypot would
+turn every real submission into a 400 and make the trap trivially detectable.
+
+To enable it: set `submitMode: "genesis"` and provide `VITE_GENESIS_ANON_KEY`.
+That key is **public by design** — in the PostgREST model the browser holds it,
+and it is worth exactly what the grants allow.
+
+### Email notification
+
+**There is none yet, deliberately.** Delta Dems has no email account or
+delivery system, and that is a deployment-stage concern rather than a
+prerequisite for building the site. Rows simply rest at
+`notify_state='pending'`, which is the correct resting state — the submission
+is already safe on disk. The `notify_*` columns exist now so that adding a
+notifier later is a grant, not a migration of a live table.
+
+Note that the current `api/submit.js` approach **cannot be carried over**:
+DigitalOcean blocks outbound SMTP on ports 25/465/587 from the Genesis droplet
+(measured in the infrastructure repo's `STAGE_6A_REPORT.md`), and Gmail
+publishes no alternate port. Genesis-side email uses Resend's HTTPS API.
+
+### Legacy Vercel path
+
+`api/submit.js` and the `nodemailer` dependency are retained only so the
+existing Vercel preview keeps working. They are isolated behind
+`src/lib/submit/vercel.js`, are not the target architecture, and retire
+together at Genesis cutover. Their environment variables are documented in
+`.env.example`.
 
 ## Events
 
