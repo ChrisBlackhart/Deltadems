@@ -6,7 +6,7 @@ export const involvement = [
     id: "attend",
     icon: "CalendarDays",
     title: "Attend a meeting",
-    text: "We meet the first Wednesday of every month. Newcomers always welcome — come at 6:30 for coffee first.",
+    text: "We meet the first Wednesday of every month at 7:00 PM. Newcomers welcome — there's social time from 6:30 if you'd rather arrive early.",
     to: "/events",
     cta: "See meeting details",
   },

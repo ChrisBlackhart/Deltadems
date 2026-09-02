@@ -6,8 +6,8 @@ import styles from "./EmptyState.module.css";
 // Friendly fallback that still points people to the recurring meeting, so the
 // org never looks inactive even when the calendar is momentarily empty.
 export function EmptyState({
-  title = "Nothing on the calendar right now",
-  message = "We're planning our next gathering. In the meantime, our monthly membership meeting is always on — join us!",
+  title = "Nothing extra on the calendar right now",
+  message = "Beyond our standing monthly meeting, we don't have anything else scheduled at the moment. Subscribe and we'll let you know as soon as we do.",
 }) {
   return (
     <div className={styles.wrap}>
@@ -17,7 +17,7 @@ export function EmptyState({
       <h3 className={styles.title}>{title}</h3>
       <p className={styles.message}>{message}</p>
       <p className={styles.meeting}>
-        <strong>{meeting.cadence}</strong> · {meeting.time} · {meeting.venue}, Escanaba
+        <strong>{meeting.cadence}</strong> · {meeting.time} · usually {meeting.venue}
       </p>
       <Button to="/get-involved/join" variant="secondary" size="sm">
         Get event updates

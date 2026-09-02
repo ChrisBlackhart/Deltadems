@@ -1,4 +1,20 @@
-// About-page content: mission, values, leadership placeholders, quick facts.
+// ============================================================================
+// About-page content.
+//
+// CONTENT STATUS: grounded in what the committee actually publishes.
+//
+// `mission` is a light adaptation of the committee's own homepage copy. The
+// values and quick facts below deliberately describe things that can be
+// checked — the standing meeting schedule, the geography, the Michigan
+// Democratic Party affiliation, the neighboring county parties — rather than
+// organizational history, accomplishments, membership numbers or policy
+// positions, none of which we have.
+//
+// Specifically avoided: naming activities the committee has not published
+// (an earlier version claimed cleanups and picnics, which came from sample
+// event data that has since been removed as invented), and gesturing at issue
+// priorities the committee has never stated.
+// ============================================================================
 
 export const mission =
   "We support Democratic values and Democratic candidates across Delta County and beyond. The Delta Dems play an active role in engaging our friends and neighbors in service to our community — and we're proud to be part of the Michigan Democratic Party.";
@@ -7,26 +23,26 @@ export const values = [
   {
     id: "local",
     icon: "MapPin",
-    title: "Rooted in the U.P.",
-    text: "From Escanaba to Gladstone and every township in between, we organize where we live — on issues that matter to Delta County families.",
+    title: "Rooted in Delta County",
+    text: "From Escanaba to Gladstone and the townships in between, we organize where we live — among neighbors, not strangers.",
   },
   {
     id: "welcoming",
     icon: "Users",
     title: "Everyone's welcome",
-    text: "Longtime activists and first-time neighbors alike. You don't need experience or a title — just show up and pitch in.",
+    text: "Longtime activists and first-time neighbors alike. You don't need experience or a title — just show up.",
   },
   {
-    id: "service",
-    icon: "HandHeart",
-    title: "Community first",
-    text: "Cleanups, picnics, registration drives, and mutual support. We believe politics starts with showing up for each other.",
+    id: "regular",
+    icon: "CalendarDays",
+    title: "We meet, every month",
+    text: "The first Wednesday, at 7:00 PM, with social time from 6:30 — the same standing schedule we've kept year after year.",
   },
   {
-    id: "action",
+    id: "connected",
     icon: "Megaphone",
-    title: "Active year-round",
-    text: "We don't disappear between elections. Monthly meetings, ongoing events, and steady organizing keep us connected.",
+    title: "Part of something bigger",
+    text: "We're part of the Michigan Democratic Party, and one of a number of county parties organizing across the Upper Peninsula.",
   },
 ];
 
@@ -41,9 +57,11 @@ export const values = [
 // soon" state. Shape when populated: { id, name, role, photo? }
 export const leadership = [];
 
+// Four distinct, checkable facts. An earlier version spent two of its four
+// slots saying "we meet monthly" twice.
 export const quickFacts = [
-  { id: "f1", value: "Monthly", label: "Membership meetings" },
-  { id: "f2", value: "1st Wed", label: "Every month at 7 PM" },
-  { id: "f3", value: "Year-round", label: "Events & service" },
-  { id: "f4", value: "All of Delta County", label: "Escanaba, Gladstone & beyond" },
+  { id: "f1", value: "1st Wed", label: "Monthly meeting at 7:00 PM" },
+  { id: "f2", value: "6:30 PM", label: "Social time beforehand" },
+  { id: "f3", value: "All welcome", label: "Members and first-timers alike" },
+  { id: "f4", value: "Delta County", label: "Escanaba, Gladstone & the townships" },
 ];

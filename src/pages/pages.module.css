@@ -143,6 +143,12 @@
   background-position: center;
 }
 
+/* Heading for a form/aside panel. Was inlined identically in three pages. */
+.panelTitle {
+  font-size: var(--step-1);
+  margin-bottom: 1rem;
+}
+
 .helperNoteLeft {
   margin-top: 1.5rem;
   font-size: 0.92rem;

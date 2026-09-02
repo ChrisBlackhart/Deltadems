@@ -9,7 +9,7 @@ import pg from "./pages.module.css";
 export default function Volunteer() {
   useSeo(
     "Volunteer",
-    "Volunteer with the Delta County Democratic Party — knock doors, register voters, staff events, or help online. Sign up and we'll match you to a role."
+    "Volunteer with the Delta County Democratic Party — knock doors, help people register, staff events, or pitch in from home. Tell us what interests you."
   );
 
   return (

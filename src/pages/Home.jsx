@@ -53,7 +53,8 @@ export default function Home() {
         <div className="container">
           <div className={pg.headRow}>
             <SectionHeading eyebrow="What's next" title="Upcoming events" id="home-events">
-              We're out in the community all year. Come find us.
+              Our standing monthly meeting, plus anything else we've got coming
+              up. Everyone is welcome.
             </SectionHeading>
             <Button to="/events" variant="secondary">
               View all events <ArrowRight aria-hidden="true" />
@@ -168,8 +169,8 @@ export default function Home() {
               Get meeting reminders & local updates
             </h2>
             <p className={styles.subscribeText}>
-              A couple of emails a month — event invites, volunteer opportunities,
-              and important deadlines.
+              Occasional email about meetings, events and deadlines worth
+              knowing about. Nothing sold, nothing shared.
             </p>
             <ul className={styles.contactAlt}>
               <li>

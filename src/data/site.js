@@ -94,7 +94,7 @@ export const meeting = {
   // disruption risk, and whether to publish it is the committee's call.
   // Until they decide, point people to email.
   onlineNote: "Email us for the Zoom link.",
-  note: "Everyone is welcome — members and curious first-timers alike. Come at 6:30 for coffee and conversation.",
+  note: "Everyone is welcome — members and curious first-timers alike. Social time starts at 6:30 if you'd rather arrive early and say hello first.",
   mapsUrl:
     "https://www.google.com/maps/search/?api=1&query=USW+Hall+1201+Sheridan+Rd+Escanaba+MI",
 };

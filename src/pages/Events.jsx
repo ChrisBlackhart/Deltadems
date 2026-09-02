@@ -11,7 +11,7 @@ import pg from "./pages.module.css";
 export default function Events() {
   useSeo(
     "Events",
-    "Upcoming meetings, volunteer opportunities, and community events with the Delta County Democratic Party in Escanaba and across Delta County."
+    "Our standing monthly meeting — first Wednesday at 7:00 PM in Escanaba — plus any other events coming up with the Delta County Democratic Party."
   );
 
   const upcoming = getUpcomingEvents();
@@ -20,8 +20,8 @@ export default function Events() {
   return (
     <>
       <PageHeader eyebrow="Calendar" title="Events & meetings">
-        There's always something happening. Join us at our monthly meeting or out
-        in the community.
+        We meet the first Wednesday of every month, and you're welcome at it
+        whether or not you're a member.
       </PageHeader>
 
       <section className="section">

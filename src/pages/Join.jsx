@@ -93,7 +93,7 @@ export default function Join() {
           </div>
 
           <div className={pg.panel} id="subscribe">
-            <h2 style={{ fontSize: "var(--step-1)", marginBottom: "1rem" }}>
+            <h2 className={pg.panelTitle}>
               Sign up for updates
             </h2>
             <NewsletterSignup />

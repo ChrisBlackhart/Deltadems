@@ -21,7 +21,7 @@ import pg from "./pages.module.css";
 export default function Candidates() {
   useSeo(
     "Candidates & Officials",
-    "Democratic candidates and elected officials serving Delta County and Michigan's Upper Peninsula."
+    "Candidate and elected-official information for Delta County — and how to look up exactly who represents your address in Michigan."
   );
 
   return (

@@ -21,7 +21,7 @@ import pg from "./pages.module.css";
 export default function News() {
   useSeo(
     "News & Announcements",
-    "News, announcements and updates from the Delta County Democratic Party."
+    "Updates from the Delta County Democratic Party — and where else to follow what we're doing."
   );
 
   return (

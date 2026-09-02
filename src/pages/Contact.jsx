@@ -77,7 +77,7 @@ export default function Contact() {
           </div>
 
           <div className={pg.panel}>
-            <h2 style={{ fontSize: "var(--step-1)", marginBottom: "1rem" }}>
+            <h2 className={pg.panelTitle}>
               Send us a message
             </h2>
             <ContactForm />

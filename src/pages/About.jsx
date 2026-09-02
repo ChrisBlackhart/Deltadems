@@ -29,22 +29,25 @@ export default function About() {
           <div className={pg.prose}>
             <p>{mission}</p>
             <p>
-              We're a volunteer-driven group of neighbors who believe local
-              organizing matters. Whether you've knocked doors for decades or have
-              never been to a political meeting in your life, you belong here.
+              In practice, that mostly looks like showing up. We meet on the
+              first Wednesday of every month at 7:00&nbsp;PM, with social time
+              from 6:30 — the same standing schedule we've kept year after year.
+              Whether you've knocked doors for decades or have never been to a
+              political meeting in your life, you're welcome at it.
             </p>
             <p>
-              As part of the{" "}
+              We're part of the{" "}
               <a href={site.ctas.michiganDems} target="_blank" rel="noreferrer">
                 Michigan Democratic Party
               </a>
-              , we connect Delta County to a statewide movement — while keeping our
-              focus firmly on the issues that shape life in the U.P.
+              , and one of a number of county parties organizing across the Upper
+              Peninsula — neighbors doing the same work in their own communities,
+              listed further down this page.
             </p>
           </div>
 
           <aside className={pg.panelDark}>
-            <h2 style={{ fontSize: "var(--step-1)", marginBottom: "1rem" }}>
+            <h2 className={pg.panelTitle}>
               When & where we meet
             </h2>
             <ul className={pg.meetingList}>
@@ -58,7 +61,7 @@ export default function About() {
               <li>
                 <MapPin aria-hidden="true" />
                 <span>
-                  <strong>{meeting.venue}</strong>
+                  <strong>Usually {meeting.venue}</strong>
                   <br /> {meeting.address}
                 </span>
               </li>
