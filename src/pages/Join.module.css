@@ -49,9 +49,11 @@
   flex: none;
 }
 .meetingCta p {
-  flex: 1;
-  min-width: 220px;
+  flex: 1 1 100%;
   color: #5f4600;
   font-size: 0.94rem;
   line-height: 1.5;
+}
+.meetingCta p strong {
+  color: #4a3600;
 }

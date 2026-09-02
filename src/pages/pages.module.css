@@ -143,6 +143,13 @@
   background-position: center;
 }
 
+.helperNoteLeft {
+  margin-top: 1.5rem;
+  font-size: 0.92rem;
+  color: var(--slate-600);
+  max-width: 46ch;
+}
+
 .helperNote {
   margin-top: 1.25rem;
   text-align: center;

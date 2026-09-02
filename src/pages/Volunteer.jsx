@@ -15,8 +15,8 @@ export default function Volunteer() {
   return (
     <>
       <PageHeader eyebrow="Volunteer" title="Lend a hand — every hour counts">
-        You don't need experience or a title. Tell us what you enjoy and how much
-        time you have, and we'll find the right fit.
+        You don't need experience or a title to be useful here. Tell us what
+        you'd enjoy and how much time you have, and someone will follow up.
       </PageHeader>
 
       <section className="section">
@@ -41,15 +41,20 @@ export default function Volunteer() {
         <div className={`container ${pg.split}`}>
           <div>
             <SectionHeading eyebrow="Sign up" title="Ready to get started?">
-              Fill out the form and we'll be in touch about upcoming opportunities
-              that match your interests. Questions first? That's fine too — just
-              tell us.
+              Tell us what interests you and someone from the committee will get
+              in touch about what's coming up. Still deciding, or just have a
+              question? Send it anyway — that's a fine reason to write.
             </SectionHeading>
             <ul className={pg.checklist}>
-              <li>No experience needed — we train you</li>
-              <li>Flexible, low-pressure, and often remote</li>
-              <li>A great way to meet neighbors</li>
+              <li>No experience or political background needed</li>
+              <li>Say how much time you have — an hour is genuinely useful</li>
+              <li>Plenty of ways to help from home if that suits you better</li>
+              <li>A good way to meet neighbors who care about the same things</li>
             </ul>
+            <p className={pg.helperNoteLeft}>
+              Not sure yet? The lowest-pressure option is simply coming to a
+              monthly meeting and seeing what we're like.
+            </p>
           </div>
           <div className={pg.panel}>
             <VolunteerForm />

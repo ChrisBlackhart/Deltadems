@@ -52,9 +52,10 @@ export default function Contact() {
                 <span>
                   <strong>Monthly meeting</strong>
                   <br />
-                  {meeting.cadence}, {meeting.time}
+                  {meeting.cadence}, {meeting.time} (social from{" "}
+                  {meeting.socialTime})
                   <br />
-                  {meeting.venue}, {meeting.address}
+                  Usually {meeting.venue}, {meeting.address}
                 </span>
               </li>
               <li>
