@@ -216,10 +216,22 @@ domain is connected.
 
 ## Deployment
 
-Vercel builds from the `main` branch via the GitHub integration. `vercel.json`
-rewrites all routes to `index.html` so client-side routes work on direct load and
-refresh. **The real domain is not connected yet** — do not connect it until the
-client approves launch.
+**See [DEPLOYMENT.md](DEPLOYMENT.md) for the full Genesis deployment handoff.**
+It is the authoritative checklist; this section is only orientation.
+
+The eventual production target is **SPS Genesis**, where the `deltadems`
+project already exists. Two rules from that document are worth repeating here:
+
+- **Never run `omega new-project deltadems`** — it re-runs an onboarding-only
+  SQL template that would re-open the inquiries table to public SELECT and
+  DELETE. The deploy command is `omega web deploy deltadems <build-dir>`.
+- **`omega render` is global** and regenerates every project's Caddy config, so
+  it must not run while the Pathfinder cutover is pending.
+
+Vercel currently builds from `main` via the GitHub integration and is retained
+as a reference and rollback path. `vercel.json` rewrites all routes to
+`index.html`; on Genesis that behaviour comes from `SP_WEB_SPA=true` instead.
+**The real domain is not connected yet** — it still serves the live Wix site.
 
 ## Launch checklist (high level)
 
