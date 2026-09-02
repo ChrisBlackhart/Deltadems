@@ -1,8 +1,0 @@
-# Delta County Democratic Party
-# NOTE: update the Sitemap URL below when the production domain is connected
-# (keep it in sync with siteUrl in src/config.js).
-
-User-agent: *
-Allow: /
-
-Sitemap: https://deltadems-concept.vercel.app/sitemap.xml
