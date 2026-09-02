@@ -1,3 +1,7 @@
+// RETAINED, CURRENTLY UNRENDERED. Nothing imports this today because the news
+// list is empty pending the committee — see src/data/news.js. Kept because it
+// is what /news needs the moment real posts arrive.
+
 import { ArrowRight } from "lucide-react";
 import { Tag } from "../ui/Tag.jsx";
 import { formatDate } from "../../lib/date.js";

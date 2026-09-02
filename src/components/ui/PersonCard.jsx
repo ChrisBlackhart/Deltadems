@@ -8,7 +8,13 @@ function initials(name) {
     .join("");
 }
 
-// Person card with an initials avatar placeholder (swap for real photos).
+// Person card with an initials avatar (swap for real photos when available).
+//
+// RETAINED, CURRENTLY UNRENDERED. Nothing imports this today because the
+// candidate, official and officer lists are empty pending the committee — see
+// src/data/officials.js. It is kept rather than deleted because it is exactly
+// what those pages need the moment real names arrive, and rebuilding it later
+// would be redundant work.
 export function PersonCard({ name, office, blurb, compact = false }) {
   return (
     <article className={styles.card} data-compact={compact}>
