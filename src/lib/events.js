@@ -45,17 +45,24 @@ function nthWeekdayOfMonth(year, month, weekday, ordinal) {
 }
 
 /**
- * The recurring monthly meeting, generated rather than hand-listed.
+ * The recurring monthly meeting, generated from the STANDING SCHEDULE.
  *
- * This is real, verified content: the committee's own published event pages
- * show an unbroken run of first-Wednesday 7:00 PM meetings, and their site
- * still advertises the same cadence. Generating it means the calendar is never
- * empty and never stale — the failure the old Wix site had, where "No events at
- * the moment" made an active organization look dormant.
+ * What is actually established: the committee publicly states that meetings are
+ * held the first Wednesday of the month at 7:00 PM with social time from
+ * 6:30 PM, usually at the USW hall or via Zoom. Their own published listings
+ * from 2022-2025 bear that out without exception.
  *
- * If the committee ever cancels or moves one, that becomes a real entry in
- * src/data/events.js, which takes precedence by being a specific fact rather
- * than a generated assumption.
+ * What is NOT established is any individual future meeting. The committee has
+ * not published details for these dates, so the venue and the Zoom option are
+ * presented as the usual arrangement rather than as confirmed facts — hence
+ * `usualLocation` rather than `location`, and `onlineUsual` rather than
+ * `online`. Generating the dates keeps the calendar from looking dormant, which
+ * is the failure the current Wix site has; overstating them would trade one
+ * credibility problem for a worse one.
+ *
+ * A meeting the committee HAS published details for belongs in
+ * src/data/events.js as a real entry, which takes precedence by being a
+ * specific fact rather than a standing assumption.
  */
 export function getRecurringMeetings({ count = 6, from = new Date() } = {}) {
   const { weekday, ordinal } = meeting.recurrence;
@@ -78,10 +85,12 @@ export function getRecurringMeetings({ count = 6, from = new Date() } = {}) {
       end: meeting.endTime,
       doors: meeting.socialTime,
       category: "Meeting",
-      location: `${meeting.venue}, ${meeting.city}`,
-      online: true,
+      // Hedged deliberately: this is the standing arrangement, not a detail
+      // the committee has confirmed for this particular date.
+      usualLocation: `${meeting.venue}, ${meeting.city}`,
+      onlineUsual: true,
       recurring: true,
-      summary: meeting.note,
+      summary: meeting.standingNote,
     });
   }
 

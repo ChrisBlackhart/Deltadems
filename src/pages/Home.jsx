@@ -1,4 +1,4 @@
-import { ArrowRight, Vote, Mail, MapPin, AlertTriangle } from "lucide-react";
+import { ArrowRight, Vote, Mail, MapPin } from "lucide-react";
 import { useSeo } from "../lib/useSeo.js";
 import { Hero } from "../components/sections/Hero.jsx";
 import { NextMeetingBanner } from "../components/sections/NextMeetingBanner.jsx";
@@ -147,10 +147,8 @@ export default function Home() {
               <Vote aria-hidden="true" /> All voting resources
             </Button>
           </div>
-          {/* Build-time reminder for the team; see src/data/resources.js. */}
           <p className={styles.verifyNote}>
-            <AlertTriangle aria-hidden="true" />
-            Official links pending human verification before launch — see{" "}
+            Official State of Michigan resources, straight from{" "}
             <a href={votingHomeUrl} target="_blank" rel="noreferrer">
               michigan.gov/vote
             </a>

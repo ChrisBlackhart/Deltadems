@@ -23,8 +23,10 @@ export function NextMeetingBanner() {
             <li>
               <Clock aria-hidden="true" /> {meeting.time} · social from {meeting.socialTime}
             </li>
+            {/* "Usually" is load-bearing: this date comes from the standing
+                schedule, and the committee has not published its details. */}
             <li>
-              <MapPin aria-hidden="true" /> {meeting.venue}, {meeting.address}
+              <MapPin aria-hidden="true" /> Usually {meeting.venue}, {meeting.address}
             </li>
             <li>
               <Video aria-hidden="true" /> {meeting.online} — {meeting.onlineNote}

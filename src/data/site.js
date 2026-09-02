@@ -81,7 +81,13 @@ export const meeting = {
   street: "1201 Sheridan Rd",
   city: "Escanaba, MI 49829",
   address: "1201 Sheridan Rd, Escanaba, MI 49829",
-  online: "Zoom participation is also available",
+  online: "Zoom participation is usually available",
+
+  // Shown on generated future meetings, which follow the standing schedule but
+  // whose details the committee has not published yet. Deliberately does not
+  // repeat the time, venue or social hour — the card already lists those.
+  standingNote:
+    "Everyone is welcome, members and first-timers alike. We confirm each month's location and Zoom details closer to the date — get in touch if you'd like them.",
   // NOTE: the committee currently publishes a standing Zoom join link,
   // meeting ID and passcode on each event page of the Wix site. That is
   // deliberately NOT reproduced here: a permanently public link is a

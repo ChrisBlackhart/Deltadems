@@ -1,10 +1,24 @@
-import { MapPin, Clock, Video } from "lucide-react";
+import { MapPin, Clock, Coffee, Video } from "lucide-react";
 import { Tag } from "../ui/Tag.jsx";
 import { dateParts, formatRange } from "../../lib/date.js";
 import styles from "./EventCard.module.css";
 
+/**
+ * An event card.
+ *
+ * Two kinds of event flow through here and they must not read the same way:
+ *
+ *   confirmed  — the committee published this event's details. `location` and
+ *                `online` are facts.
+ *   recurring  — generated from the standing monthly schedule. The committee
+ *                has not published this date's details, so `usualLocation` and
+ *                `onlineUsual` are hedged in the wording ("usually at…") rather
+ *                than stated as confirmed.
+ */
 export function EventCard({ event, featured = false }) {
   const { month, day, weekday } = dateParts(event.date);
+  const place = event.location || event.usualLocation;
+  const isUsualPlace = !event.location && Boolean(event.usualLocation);
 
   return (
     <article className={styles.card} data-featured={featured}>
@@ -18,6 +32,7 @@ export function EventCard({ event, featured = false }) {
         <div className={styles.tags}>
           <Tag>{event.category}</Tag>
           {event.online && <Tag tone="teal">Zoom option</Tag>}
+          {event.onlineUsual && !event.online && <Tag tone="teal">Zoom usually</Tag>}
         </div>
 
         <h3 className={styles.title}>{event.title}</h3>
@@ -31,14 +46,25 @@ export function EventCard({ event, featured = false }) {
               {event.end ? `–${event.end}` : ""}
             </span>
           </li>
-          <li>
-            <MapPin aria-hidden="true" />
-            <span>{event.location}</span>
-          </li>
+          {place && (
+            <li>
+              <MapPin aria-hidden="true" />
+              <span>
+                {isUsualPlace ? "Usually " : ""}
+                {place}
+              </span>
+            </li>
+          )}
           {event.doors && (
             <li>
-              <Video aria-hidden="true" />
+              <Coffee aria-hidden="true" />
               <span>Social time from {event.doors}</span>
+            </li>
+          )}
+          {event.online && (
+            <li>
+              <Video aria-hidden="true" />
+              <span>Joining online is an option</span>
             </li>
           )}
         </ul>

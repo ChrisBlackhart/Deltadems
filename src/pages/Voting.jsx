@@ -1,31 +1,45 @@
-import { CalendarCheck, Info } from "lucide-react";
+import { CalendarCheck, Info, ArrowUpRight, Landmark } from "lucide-react";
 import { useSeo } from "../lib/useSeo.js";
 import { PageHeader } from "../components/layout/PageHeader.jsx";
 import { SectionHeading } from "../components/ui/SectionHeading.jsx";
 import { FeatureCard } from "../components/ui/FeatureCard.jsx";
+import { Button } from "../components/ui/Button.jsx";
 import { CtaBand } from "../components/sections/CtaBand.jsx";
-import { votingSteps, keyDates } from "../data/resources.js";
+import {
+  votingSteps,
+  votingMore,
+  keyDates,
+  votingHomeUrl,
+  pollWorkerUrl,
+} from "../data/resources.js";
 import pg from "./pages.module.css";
 import styles from "./Voting.module.css";
 
+/**
+ * Voting resources.
+ *
+ * Deliberately nonpartisan: every link points at a State of Michigan service
+ * and serves any voter in Delta County regardless of party. No candidates, no
+ * endorsements, no committee positions belong on this page.
+ */
 export default function Voting() {
   useSeo(
     "Voting Resources",
-    "Register to vote, check your registration, request an absentee ballot, and find your clerk. Voting resources for Delta County and Michigan."
+    "Register to vote, check your registration, preview your ballot, vote absentee, and find your clerk — official Michigan voting resources for Delta County."
   );
 
   return (
     <>
       <PageHeader eyebrow="Voting resources" title="Make your voice heard">
-        Michigan makes it easier than ever to vote. Here's everything you need to
-        be ready for the next election.
+        Michigan has some of the most accessible voting laws in the country. Here's
+        what you need, straight from the state's own election services.
       </PageHeader>
 
       <section className="section">
         <div className="container">
-          <SectionHeading eyebrow="Get ready" title="Register, check & request" align="center">
-            These links go straight to the official Michigan Secretary of State
-            tools.
+          <SectionHeading eyebrow="Start here" title="The four things most people need" align="center">
+            Every link goes directly to the Michigan Voter Information Center or
+            the Secretary of State — never to us.
           </SectionHeading>
           <div className={pg.center} />
           <div className={pg.grid4}>
@@ -47,7 +61,7 @@ export default function Voting() {
         <div className="container">
           <div className={pg.split}>
             <div>
-              <SectionHeading eyebrow="Good to know" title="Key voting facts for Michigan" />
+              <SectionHeading eyebrow="Good to know" title="How voting works in Michigan" />
               <ul className={styles.dates}>
                 {keyDates.map((d) => (
                   <li key={d.id}>
@@ -66,11 +80,11 @@ export default function Voting() {
             <aside className={styles.notice}>
               <Info aria-hidden="true" />
               <div>
-                <h3>Verify before Election Day</h3>
+                <h3>Your clerk has the final word</h3>
                 <p>
-                  Deadlines and polling locations can change. Always confirm the
-                  details with your local Delta County clerk or Michigan.gov/Vote
-                  before you head out.
+                  Dates, polling places and drop box locations are set locally and
+                  can change. Your city or township clerk is the authoritative
+                  source for Delta County — confirm with them before Election Day.
                 </p>
               </div>
             </aside>
@@ -78,9 +92,55 @@ export default function Voting() {
         </div>
       </section>
 
+      <section className="section">
+        <div className="container">
+          <SectionHeading eyebrow="More help" title="If your situation is a little different">
+            Early voting, accessible ballots, students, and voters serving or
+            living overseas.
+          </SectionHeading>
+          <div className={pg.center} />
+          <ul className={styles.moreList}>
+            {votingMore.map((m) => (
+              <li key={m.id}>
+                <a href={m.url} target="_blank" rel="noreferrer" className={styles.moreLink}>
+                  {m.title}
+                  <ArrowUpRight aria-hidden="true" />
+                </a>
+                <span className={styles.moreText}>{m.text}</span>
+              </li>
+            ))}
+          </ul>
+
+          <div className={styles.pollWorker}>
+            <span className={styles.pollIcon}>
+              <Landmark aria-hidden="true" />
+            </span>
+            <div>
+              <h3>Work the polls</h3>
+              <p>
+                Clerks hire and train election inspectors from both parties for
+                every election. It's paid, nonpartisan, and one of the most
+                concretely useful days you can give your community.
+              </p>
+            </div>
+            <Button href={pollWorkerUrl} variant="secondary" size="sm">
+              How to apply
+            </Button>
+          </div>
+
+          <p className={pg.helperNote}>
+            Everything on this page starts at{" "}
+            <a href={votingHomeUrl} target="_blank" rel="noreferrer">
+              michigan.gov/vote
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+
       <CtaBand
         title="Help your neighbors vote, too"
-        text="Join a voter registration drive or help knock doors this season. It's the most direct way to strengthen our democracy."
+        text="Registration drives and door knocking are the most direct way to make sure Delta County turns out."
         primary={{ label: "Volunteer with us", to: "/get-involved/volunteer" }}
         showDonate={false}
       />
