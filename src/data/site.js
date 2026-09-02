@@ -63,18 +63,30 @@ export const disclaimer = {
 // page, the Contact page, and the footer.
 // ---------------------------------------------------------------------------
 export const meeting = {
+  // VERIFIED against the organization's own published event pages
+  // (deltademsmi.com/event-details/..., captured 2026-09-02). Twenty-seven
+  // event listings from 2022-2025 are all a first Wednesday at 7:00 PM, and
+  // each gives the venue and address below.
+  title: "General Monthly Meeting",
   cadence: "First Wednesday of every month",
   // Machine-readable recurrence, used to compute the next meeting date.
   recurrence: { weekday: 3, ordinal: 1 }, // 3 = Wednesday, 1st of the month
   time: "7:00 PM",
+  endTime: "8:00 PM",
+  durationMinutes: 60,
   socialTime: "6:30 PM",
-  venue: "USW Hall",
+  // Official venue name as the committee publishes it. ("USW Hall" was our
+  // earlier shorthand.)
+  venue: "USW Local 21 Escanaba",
   street: "1201 Sheridan Rd",
   city: "Escanaba, MI 49829",
   address: "1201 Sheridan Rd, Escanaba, MI 49829",
-  online: "Zoom participation may also be available",
-  // How the Zoom option is published is a committee decision — a standing
-  // public link is a disruption risk. Until decided, point people to email.
+  online: "Zoom participation is also available",
+  // NOTE: the committee currently publishes a standing Zoom join link,
+  // meeting ID and passcode on each event page of the Wix site. That is
+  // deliberately NOT reproduced here: a permanently public link is a
+  // disruption risk, and whether to publish it is the committee's call.
+  // Until they decide, point people to email.
   onlineNote: "Email us for the Zoom link.",
   note: "Everyone is welcome — members and curious first-timers alike. Come at 6:30 for coffee and conversation.",
   mapsUrl:
@@ -83,9 +95,9 @@ export const meeting = {
 
 // Items a human still needs to confirm before this site goes live.
 export const needsVerification = [
-  "Meeting time, venue, and whether Zoom is still offered",
-  "How the Zoom option should be published (public link vs. email request)",
+  "How the Zoom option should be published (the committee currently publishes a standing public link; this site asks people to email instead)",
   "Mailing address and contact email still current",
   "ActBlue link routes to the correct registered committee",
   "Final disclaimer wording (see `disclaimer` above)",
+  "Whether the 6:30 PM social time still precedes every meeting",
 ];

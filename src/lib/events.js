@@ -24,11 +24,68 @@
 // ============================================================================
 
 import { events as staticEvents, pastEvents as staticPast } from "../data/events.js";
+import { meeting } from "../data/site.js";
 import { config } from "../config.js";
 
 function parseLocal(iso) {
   const [y, m, d] = iso.split("-").map(Number);
   return new Date(y, m - 1, d);
+}
+
+function isoDate(d) {
+  const pad = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+}
+
+// The nth <weekday> of a given month, e.g. the 1st Wednesday.
+function nthWeekdayOfMonth(year, month, weekday, ordinal) {
+  const first = new Date(year, month, 1);
+  const offset = (weekday - first.getDay() + 7) % 7;
+  return new Date(year, month, 1 + offset + (ordinal - 1) * 7);
+}
+
+/**
+ * The recurring monthly meeting, generated rather than hand-listed.
+ *
+ * This is real, verified content: the committee's own published event pages
+ * show an unbroken run of first-Wednesday 7:00 PM meetings, and their site
+ * still advertises the same cadence. Generating it means the calendar is never
+ * empty and never stale — the failure the old Wix site had, where "No events at
+ * the moment" made an active organization look dormant.
+ *
+ * If the committee ever cancels or moves one, that becomes a real entry in
+ * src/data/events.js, which takes precedence by being a specific fact rather
+ * than a generated assumption.
+ */
+export function getRecurringMeetings({ count = 6, from = new Date() } = {}) {
+  const { weekday, ordinal } = meeting.recurrence;
+  const out = [];
+
+  for (let i = 0; out.length < count && i < count + 2; i++) {
+    const probe = new Date(from.getFullYear(), from.getMonth() + i, 1);
+    const date = nthWeekdayOfMonth(probe.getFullYear(), probe.getMonth(), weekday, ordinal);
+
+    // Skip a meeting that has already happened this month.
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59, 999);
+    if (endOfDay < from) continue;
+
+    out.push({
+      id: `meeting-${isoDate(date)}`,
+      title: meeting.title,
+      date: isoDate(date),
+      start: meeting.time,
+      end: meeting.endTime,
+      doors: meeting.socialTime,
+      category: "Meeting",
+      location: `${meeting.venue}, ${meeting.city}`,
+      online: true,
+      recurring: true,
+      summary: meeting.note,
+    });
+  }
+
+  return out;
 }
 
 // An event counts as "past" only once its final day is over.
@@ -50,10 +107,17 @@ function getSource() {
   return { upcoming: staticEvents, past: staticPast };
 }
 
-export function getUpcomingEvents({ limit } = {}) {
+export function getUpcomingEvents({ limit, includeMeetings = true } = {}) {
   const { upcoming } = getSource();
   const now = new Date();
-  const list = [...upcoming].filter((e) => isUpcoming(e, now)).sort(byDateAsc);
+
+  // One-off events supplied by the committee, plus the generated recurring
+  // meeting. Merged and sorted together so the calendar reads chronologically
+  // rather than as two separate lists.
+  const oneOff = [...upcoming].filter((e) => isUpcoming(e, now));
+  const meetings = includeMeetings ? getRecurringMeetings({ count: 6, from: now }) : [];
+
+  const list = [...oneOff, ...meetings].sort(byDateAsc);
   return typeof limit === "number" ? list.slice(0, limit) : list;
 }
 
@@ -73,7 +137,8 @@ export function getFeaturedEvents({ limit = 3 } = {}) {
   return list.slice(0, limit);
 }
 
-// True when the currently displayed events are sample/placeholder data.
-export function eventsArePlaceholder() {
-  return getUpcomingEvents().some((e) => e.placeholder) || config.eventsSource === "static";
+// True when the committee has supplied no one-off events of its own, so the
+// calendar is showing only the generated recurring meeting.
+export function hasOnlyRecurringMeetings() {
+  return getUpcomingEvents().every((e) => e.recurring);
 }

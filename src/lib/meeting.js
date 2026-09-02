@@ -1,5 +1,10 @@
 // Compute the next "first Wednesday of the month" meeting and build a
 // downloadable calendar file — all client-side, no backend needed.
+//
+// Title, venue, duration and times come from src/data/site.js, which is
+// verified against the committee's own published event listings.
+
+import { meeting, site } from "../data/site.js";
 
 export function nextFirstWednesday(from = new Date()) {
   const build = (year, month) => {
@@ -25,20 +30,33 @@ function icsStamp(date) {
     .replace(/\.\d{3}/, "");
 }
 
+// Commas and semicolons are field separators in iCalendar text values and
+// must be escaped, or a venue like "USW Local 21, Escanaba" silently truncates
+// in the importing calendar.
+function icsText(value) {
+  return String(value)
+    .replace(/\\/g, "\\\\")
+    .replace(/;/g, "\\;")
+    .replace(/,/g, "\\,")
+    .replace(/\r?\n/g, "\\n");
+}
+
 export function buildMeetingIcs(start) {
-  const end = new Date(start.getTime() + 90 * 60 * 1000); // ~1.5h
+  const end = new Date(start.getTime() + meeting.durationMinutes * 60 * 1000);
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Delta County Democratic Party//Meeting//EN",
+    `PRODID:-//${site.name}//Meeting//EN`,
     "BEGIN:VEVENT",
     `UID:${start.getTime()}@deltademsmi.com`,
     `DTSTAMP:${icsStamp(new Date())}`,
     `DTSTART:${icsStamp(start)}`,
     `DTEND:${icsStamp(end)}`,
-    "SUMMARY:Delta Dems Monthly Membership Meeting",
-    "LOCATION:USW Hall, 1201 Sheridan Rd, Escanaba, MI 49829",
-    "DESCRIPTION:Social time from 6:30 PM. Everyone welcome — also on Zoom.",
+    `SUMMARY:${icsText(`${site.shortName} — ${meeting.title}`)}`,
+    `LOCATION:${icsText(`${meeting.venue}, ${meeting.address}`)}`,
+    `DESCRIPTION:${icsText(
+      `Social time from ${meeting.socialTime}. Everyone welcome. ${meeting.online} — ${meeting.onlineNote}`
+    )}`,
     "END:VEVENT",
     "END:VCALENDAR",
   ];

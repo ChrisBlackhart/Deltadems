@@ -1,55 +1,63 @@
-import { Info } from "lucide-react";
 import { useSeo } from "../lib/useSeo.js";
 import { PageHeader } from "../components/layout/PageHeader.jsx";
 import { SectionHeading } from "../components/ui/SectionHeading.jsx";
-import { PersonCard } from "../components/ui/PersonCard.jsx";
 import { CtaBand } from "../components/sections/CtaBand.jsx";
-import { candidates, officials } from "../data/officials.js";
+import { ContentPending } from "../components/sections/ContentPending.jsx";
+import { votingHomeUrl } from "../data/resources.js";
 import pg from "./pages.module.css";
 
+/**
+ * Candidates & elected officials.
+ *
+ * Deliberately holds no names. The committee's own site says "TBD — this page
+ * will be updated when candidates are announced", and which candidates a party
+ * committee supports is an endorsement decision only the committee can make.
+ * Elected-office holders change with every election and would need to be
+ * verified against official sources and signed off before publication.
+ *
+ * So this page ships honest and empty rather than plausible and invented. See
+ * src/data/officials.js, which is retained but no longer rendered.
+ */
 export default function Candidates() {
   useSeo(
     "Candidates & Officials",
-    "Meet the Democratic candidates and elected officials representing Delta County and Michigan's Upper Peninsula."
+    "Democratic candidates and elected officials serving Delta County and Michigan's Upper Peninsula."
   );
 
   return (
     <>
       <PageHeader eyebrow="On the ballot" title="Candidates & elected officials">
-        Meet the Democrats working for Delta County — on the ballot this cycle and
-        already serving our community.
+        Who's running, and who currently represents Delta County.
       </PageHeader>
 
       <section className="section">
         <div className="container">
-          <p className={pg.demoNote} style={{ marginBottom: "1.5rem" }}>
-            <Info aria-hidden="true" /> Names and offices below are placeholders for
-            this demonstration.
-          </p>
-
-          <SectionHeading eyebrow="This cycle" title="Candidates we support">
-            Local Democrats running to represent us at every level of government.
-          </SectionHeading>
+          <SectionHeading eyebrow="This cycle" title="Candidates" />
           <div className={pg.center} />
-          <div className={pg.grid3}>
-            {candidates.map((c) => (
-              <PersonCard key={c.id} name={c.name} office={c.office} blurb={c.blurb} />
-            ))}
-          </div>
+          <ContentPending
+            title="No candidates announced yet"
+            message="We'll list the Democrats on the ballot here once candidates are announced and the committee has met. Until then, the fastest way to hear first is to join our email list."
+            action={{ label: "Get updates by email", to: "/get-involved/join" }}
+          />
         </div>
       </section>
 
       <section className={`section ${pg.tintedSection}`}>
         <div className="container">
-          <SectionHeading eyebrow="Serving now" title="Your elected officials">
-            The Democrats currently representing Delta County and the U.P.
-          </SectionHeading>
+          <SectionHeading eyebrow="Serving now" title="Your elected officials" />
           <div className={pg.center} />
-          <div className={pg.grid2}>
-            {officials.map((o) => (
-              <PersonCard key={o.id} name={o.name} office={o.office} />
-            ))}
-          </div>
+          <ContentPending
+            title="We're confirming this list"
+            message="Rather than publish office-holders we haven't verified, we're checking each one against official sources first. In the meantime you can look up everyone who represents your address on the State of Michigan's voter site."
+            action={{ label: "Ask us anything", to: "/contact" }}
+          />
+          <p className={pg.helperNote}>
+            Look up your own representatives at{" "}
+            <a href={votingHomeUrl} target="_blank" rel="noreferrer">
+              michigan.gov/vote
+            </a>
+            .
+          </p>
         </div>
       </section>
 

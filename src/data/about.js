@@ -30,15 +30,16 @@ export const values = [
   },
 ];
 
-// CONTENT STATUS: PLACEHOLDER — fictional officers. Replace with real names,
-// roles, and photos before launch. Tagged `placeholder: true`.
-const rawLeadership = [
-  { id: "l1", name: "Alex Johnson", role: "Chair" },
-  { id: "l2", name: "Morgan Lee", role: "Vice Chair" },
-  { id: "l3", name: "Jesse Park", role: "Secretary" },
-  { id: "l4", name: "Dana Foster", role: "Treasurer" },
-];
-export const leadership = rawLeadership.map((p) => ({ ...p, placeholder: true }));
+// CONTENT STATUS: EMPTY BY DESIGN — awaiting the committee.
+//
+// Fictional officer names were removed rather than left here. Officers are
+// elected volunteers whose names, roles and photos only the committee can
+// supply, and inventing them would attribute real positions to people who do
+// not hold them.
+//
+// While empty, the About page renders an honest "officer names are coming
+// soon" state. Shape when populated: { id, name, role, photo? }
+export const leadership = [];
 
 export const quickFacts = [
   { id: "f1", value: "Monthly", label: "Membership meetings" },

@@ -44,20 +44,25 @@ export default function Events() {
         </div>
       </section>
 
-      <section className={`section ${pg.tintedSection}`}>
-        <div className="container">
-          <SectionHeading eyebrow="Recently" title="What we've been up to">
-            A look back at some of our recent gatherings — because an active party
-            shows up all year.
-          </SectionHeading>
-          <div className={pg.center} />
-          <div className={pg.grid3}>
-            {past.map((ev) => (
-              <EventCard key={ev.id} event={ev} />
-            ))}
+      {/* Only rendered once there are real past events to look back on.
+          An empty "what we've been up to" section would say the opposite of
+          what it is there to say. */}
+      {past.length > 0 && (
+        <section className={`section ${pg.tintedSection}`}>
+          <div className="container">
+            <SectionHeading eyebrow="Recently" title="What we've been up to">
+              A look back at some of our recent gatherings — because an active
+              party shows up all year.
+            </SectionHeading>
+            <div className={pg.center} />
+            <div className={pg.grid3}>
+              {past.map((ev) => (
+                <EventCard key={ev.id} event={ev} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <CtaBand
         title="Never miss an event"

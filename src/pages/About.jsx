@@ -1,12 +1,13 @@
-import { CalendarClock, MapPin, Video, ExternalLink } from "lucide-react";
+import { CalendarClock, MapPin, Video } from "lucide-react";
 import { useSeo } from "../lib/useSeo.js";
 import { PageHeader } from "../components/layout/PageHeader.jsx";
 import { SectionHeading } from "../components/ui/SectionHeading.jsx";
 import { FeatureCard } from "../components/ui/FeatureCard.jsx";
-import { PersonCard } from "../components/ui/PersonCard.jsx";
 import { Button } from "../components/ui/Button.jsx";
 import { CtaBand } from "../components/sections/CtaBand.jsx";
-import { mission, values, leadership } from "../data/about.js";
+import { ContentPending } from "../components/sections/ContentPending.jsx";
+import { PartnerList } from "../components/sections/PartnerList.jsx";
+import { mission, values } from "../data/about.js";
 import { site, meeting } from "../data/site.js";
 import pg from "./pages.module.css";
 
@@ -89,21 +90,27 @@ export default function About() {
 
       <section className="section">
         <div className="container">
-          <div className={pg.headRow}>
-            <SectionHeading eyebrow="Your officers" title="Party leadership">
-              Elected volunteers who keep things running. Photos and bios coming
-              soon.
-            </SectionHeading>
-          </div>
-          <div className={pg.grid4}>
-            {leadership.map((p) => (
-              <PersonCard key={p.id} name={p.name} office={p.role} compact />
-            ))}
-          </div>
-          <p className={pg.placeholderNote}>
-            <ExternalLink aria-hidden="true" size={15} />
-            Names shown are placeholders for this demonstration.
-          </p>
+          <SectionHeading eyebrow="Your officers" title="Party leadership" />
+          <div className={pg.center} />
+          <ContentPending
+            title="Officer names are coming soon"
+            message="Our elected officers keep the committee running month to month. We're confirming names, roles and photos before publishing them here."
+            action={{ label: "Ask us who to talk to", to: "/contact" }}
+          />
+        </div>
+      </section>
+
+      <section className={`section ${pg.tintedSection}`}>
+        <div className="container">
+          <SectionHeading
+            eyebrow="Across the U.P."
+            title="Our neighboring county parties"
+          >
+            Delta County is one of many U.P. communities organizing. If you've
+            moved, or you're closer to another county, start with them.
+          </SectionHeading>
+          <div className={pg.center} />
+          <PartnerList />
         </div>
       </section>
 

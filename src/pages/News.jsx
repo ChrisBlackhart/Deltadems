@@ -1,38 +1,51 @@
-import { Info } from "lucide-react";
 import { useSeo } from "../lib/useSeo.js";
 import { PageHeader } from "../components/layout/PageHeader.jsx";
 import { SectionHeading } from "../components/ui/SectionHeading.jsx";
-import { NewsCard } from "../components/sections/NewsCard.jsx";
 import { CtaBand } from "../components/sections/CtaBand.jsx";
-import { news } from "../data/news.js";
+import { ContentPending } from "../components/sections/ContentPending.jsx";
+import { site } from "../data/site.js";
 import pg from "./pages.module.css";
 
+/**
+ * News & announcements.
+ *
+ * Holds no posts. The committee does not currently publish news anywhere —
+ * there is no news section on their existing site — so every post previously
+ * shown here was invented. Writing announcements on a real party's behalf, or
+ * inventing recaps of events that may not have happened, is not something this
+ * page should do.
+ *
+ * Sample posts are retained in src/data/news.js for layout reference but are
+ * no longer rendered.
+ */
 export default function News() {
   useSeo(
     "News & Announcements",
-    "The latest news, announcements, and recaps from the Delta County Democratic Party."
+    "News, announcements and updates from the Delta County Democratic Party."
   );
 
   return (
     <>
       <PageHeader eyebrow="News" title="News & announcements">
-        Updates, recaps, and what's ahead. This is where we keep Delta County in
-        the loop.
+        Updates from the committee, and what's coming up next.
       </PageHeader>
 
       <section className="section">
         <div className="container">
-          <div className={pg.headRow}>
-            <SectionHeading eyebrow="Latest" title="Recent posts" />
-            <p className={pg.demoNote}>
-              <Info aria-hidden="true" /> Sample posts for this demonstration.
-            </p>
-          </div>
-          <div className={pg.grid3}>
-            {news.map((n) => (
-              <NewsCard key={n.id} item={n} />
-            ))}
-          </div>
+          <SectionHeading eyebrow="Latest" title="Recent updates" />
+          <div className={pg.center} />
+          <ContentPending
+            title="Nothing posted yet"
+            message="We're setting this up as the place for committee updates, event recaps and local news. Until it's running, the quickest ways to hear from us are our email list and Facebook."
+            action={{ label: "Join the email list", to: "/get-involved/join" }}
+          />
+          <p className={pg.helperNote}>
+            You can also follow us on{" "}
+            <a href={site.social[0].url} target="_blank" rel="noreferrer">
+              Facebook
+            </a>
+            , where we post most often.
+          </p>
         </div>
       </section>
 
